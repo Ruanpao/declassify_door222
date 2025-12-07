@@ -4,8 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "declassify_door\CoreTypes\ItemCoreType.h"
 #include "InventoryComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnInventoryUpdate)
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FHoldedChanged , FItemInInventory)
+
+USTRUCT()
+struct FFindSlot
+{
+	GENERATED_BODY()
+
+	bool FindSlot = false;
+
+	int32 SlotIndex = -1;
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class DECLASSIFY_DOOR_API UInventoryComponent : public UActorComponent
@@ -22,6 +36,44 @@ protected:
 
 public:	
 	// Called every frame
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="DataTable")
+	UDataTable* Datatable;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="InventoryComponent")
+	TArray<FItemInInventory> Slot;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="InventoryComponent")
+	int32 SlotSize = 10;
+
+	FOnInventoryUpdate OnInventoryUpdate;
+
+	FHoldedChanged HoldedChanged;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="HoldedItem")
+	FItemInInventory HoldedItem;
+
+	bool AddToInventory(const FName Item_ID, int32 Quantity);
+
+	FFindSlot FindSlot(FName Item_ID);
+
+	void AddOne(int32 Index, int32 Quantity);
+
+	int32 AnyEmptySlotAvailable() const;
+
+	void CreateNewSlot(FName Item_ID, int32 Index);
+
+	void UpdateSlot();
+
+	void RemoveFromInventory(int32 Index , bool RemoveAll , bool IsConsumed);
+
+	void RemoveOne(int32 Index, int32 Quantity);
+
+	void DestroyAOldSlot(int32 Index);
+	
+	void UpdateHoldedSlot(int32 Index);
+
+	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 		

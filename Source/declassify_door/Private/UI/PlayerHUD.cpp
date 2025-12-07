@@ -4,12 +4,12 @@
 #include "UI/PlayerHUD.h"
 
 #include "Engine/Canvas.h"
-#include "../UI/InventoryMainWidget.h"
+#include "UI/InventoryMainWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "UI/DisposalPopWidget.h"
 
-#include "Character/PlayerController.h"
-#include "Character/Player.h"
+#include "declassify_door/declassify_doorPlayerController.h"
+#include "declassify_door/declassify_doorCharacter.h"
 #include "UI/InteractPopWidget.h"
 
 
@@ -68,23 +68,11 @@ void APlayerHUD::BeginPlay()
     {
         InventoryMainWidget->AddToViewport();
 
-        if (UInventoryMainWidget* InventoryMainWidgetInstance = Cast<UPVZ3DInventoryMainWidget>(InventoryMainWidget))
+        if (UInventoryMainWidget* InventoryMainWidgetInstance = Cast<UInventoryMainWidget>(InventoryMainWidget))
         {
-            InventoryMainWidgetInstance->Received_2.AddUObject(this, &APVZ3DPlayerHUD::ReceivedInfo);
+            InventoryMainWidgetInstance->Received_2.AddUObject(this, &APlayerHUD::ReceivedInfo);
             
-            InventoryMainWidgetInstance->ReceivedRemove.AddUObject(this, &APVZ3DPlayerHUD::RemoveRequest);
-        }
-    }
-
-    if (APlayerController* PlayerController = GetOwningPlayerController())
-    {
-        if (APlayer* PlayerCharacter = Cast<APlayer>(PlayerController->GetPawn()))
-        {
-            if (UWeaponComponent* WeaponComponent = PlayerCharacter->FindComponentByClass<UWeaponComponent>())
-            {
-                WeaponComponent->ButtonInteraction.AddUObject(this, &APlayerHUD::CreateInteractPopWidget);
-                UE_LOG(LogTemp,Error,TEXT("DrawHUD bind, %s , Player:%s"),*GetName(), *PlayerCharacter->GetName());
-            }
+            InventoryMainWidgetInstance->ReceivedRemove.AddUObject(this, &APlayerHUD::RemoveRequest);
         }
     }
 }

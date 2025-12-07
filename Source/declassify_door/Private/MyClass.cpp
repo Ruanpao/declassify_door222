@@ -5,6 +5,7 @@
 
 MyClass::MyClass()
 {
+	UE_LOG(LogTemp, Log, TEXT("Hello, World!"));
 }
 
 MyClass::~MyClass()

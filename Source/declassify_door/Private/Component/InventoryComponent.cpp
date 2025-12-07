@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "InventoryComponent.h"
-
+#include "Component/InventoryComponent.h"
+#include "UI/PlayerHUD.h"
 #include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogInventory, All, All);
@@ -27,14 +27,14 @@ void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	UpdateSlot();
-	HoldedItem = Slot[0];
+	HeldItem = Slot[0];
 	AActor* OwnerActor = GetOwner();
 	if (!OwnerActor)
 	{
 		UE_LOG(LogInventory, Error, TEXT("Inventory has no owner actor!"));
 		return;
 	}
-/*
+
 	if (OwnerActor->ActorHasTag(FName("Player")))
 	{
 		// 确保 Owner 是 Pawn（玩家角色）
@@ -45,18 +45,17 @@ void UInventoryComponent::BeginPlay()
 			if (PlayerController && PlayerController->GetPawn() == PlayerPawn)
 			{
 				// 获取 HUD 并绑定委托（仅玩家 Inventory 执行）
-				if (APVZ3DPlayerHUD* HUD = Cast<APVZ3DPlayerHUD>(PlayerController->GetHUD()))
+				if (APlayerHUD* HUD = Cast<APlayerHUD>(PlayerController->GetHUD()))
 				{
-					HUD->Buy.AddUObject(this, &UPVZ3DInventoryComponent::Buy);
-					HUD->OnHoledSlotChanged.AddUObject(this, &UPVZ3DInventoryComponent::UpdateHoldedSlot);
-					HUD->RemoveItem.AddUObject(this, &UPVZ3DInventoryComponent::RemoveFromInventory);
+					HUD->OnHoledSlotChanged.AddUObject(this, &UInventoryComponent::UpdateHeldSlot);
+					HUD->RemoveItem.AddUObject(this, &UInventoryComponent::RemoveFromInventory);
                     
 					UE_LOG(LogInventory, Log, TEXT("Player Inventory bound to HUD successfully"));
 				}
 			}
 		}
 	}
-	*/
+	
 	else
 	{
 		UE_LOG(LogInventory, Log, TEXT("This is not a player inventory, skipping HUD binding"));
@@ -134,7 +133,7 @@ void UInventoryComponent::DestroyAOldSlot(int32 Index)
 {
 }
 
-void UInventoryComponent::UpdateHoldedSlot(int32 Index)
+void UInventoryComponent::UpdateHeldSlot(int32 Index)
 {
 }
 

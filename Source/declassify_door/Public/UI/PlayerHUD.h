@@ -1,0 +1,101 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/HUD.h"
+#include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
+#include "../Interface/ShowInfoInterface.h"
+#include "PlayerHUD.generated.h"
+
+DECLARE_MULTICAST_DELEGATE_TwoParams(FSendInfo, FName , int32)
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHeldSlotChanged , int32)
+
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FRemoveItem , int32 , bool , bool)
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMouseSituationChanged , bool)
+
+UCLASS()
+class DECLASSIFY_DOOR_API APlayerHUD : public AHUD
+{
+	GENERATED_BODY()
+
+	public:
+	int32 RemoveIndex;
+	
+	virtual void DrawHUD() override;
+
+	void InventoryInformationVisibility();
+
+	void ShopVisibility();
+
+	void RemoveRequest(int32 Index);
+
+	void RemoveRequest_2(bool RemoveAll);
+	
+	FSendInfo SendInfo;
+
+	FOnHeldSlotChanged OnHoledSlotChanged;
+
+	FRemoveItem RemoveItem;
+
+	FOnMouseSituationChanged OnMouseSituationChanged;
+
+protected:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
+	TSubclassOf<UUserWidget> PlayerDetailWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
+	TSubclassOf<UUserWidget> LevelWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
+	TSubclassOf<UUserWidget> InventoryMainWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
+	TSubclassOf<UUserWidget> InventoryInformationWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
+	TSubclassOf<UUserWidget> DisposalPopWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category =  "UI")
+	TSubclassOf<UUserWidget> HoldedItemWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UUserWidget> InteractPopWidgetClass;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
+	UUserWidget* InventoryInformationWidget;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
+	UUserWidget* InventoryMainWidget;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
+	UUserWidget* DisposalPopWidget;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
+	UUserWidget* InteractPopWidget;
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadWrite , Category = "Num")
+	int32 CurrentVisibleNum = 0;
+
+	UFUNCTION(Blueprintable)
+	void ReceivedInfo(int32 Index);
+	
+	UFUNCTION(BlueprintCallable)
+	void ReceivedInfo_2(FName P_ID, int32 P_Quantity , int32 P_Price);
+
+	UFUNCTION(BlueprintCallable)
+	void CreateInteractPopWidget(bool IsClicked, bool IsNearTower, bool IsFullTower , bool IsFullLevel , bool IsIntheMidLine , FItemInInventory HoldedItem);
+	
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateMouseSituation(int32 Num);
+
+private:
+	void DrawCrossHair();
+	
+};

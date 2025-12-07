@@ -9,7 +9,7 @@
 
 DECLARE_MULTICAST_DELEGATE(FOnInventoryUpdate)
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FHoldedChanged , FItemInInventory)
+DECLARE_MULTICAST_DELEGATE_OneParam(FHeldChanged , FItemInInventory)
 
 USTRUCT()
 struct FFindSlot
@@ -48,10 +48,10 @@ public:
 
 	FOnInventoryUpdate OnInventoryUpdate;
 
-	FHoldedChanged HoldedChanged;
+	FHeldChanged HeldChanged;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="HoldedItem")
-	FItemInInventory HoldedItem;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="HeldItem")
+	FItemInInventory HeldItem;
 
 	bool AddToInventory(const FName Item_ID, int32 Quantity);
 
@@ -71,7 +71,7 @@ public:
 
 	void DestroyAOldSlot(int32 Index);
 	
-	void UpdateHoldedSlot(int32 Index);
+	void UpdateHeldSlot(int32 Index);
 
 	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

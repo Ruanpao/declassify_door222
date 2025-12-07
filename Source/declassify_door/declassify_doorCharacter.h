@@ -5,7 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Interface/InteractInterface.h"
+
 #include "declassify_doorCharacter.generated.h"
+
 
 class UInputComponent;
 class USkeletalMeshComponent;
@@ -36,6 +39,9 @@ class Adeclassify_doorCharacter : public ACharacter
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
 	
 public:
 	Adeclassify_doorCharacter();
@@ -67,5 +73,9 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+	void Interact();
+	AActor* SphereTraceForInteractable();
+	UPROPERTY(EditAnywhere, Category = "Interaction")
+	float InteractRadius = 3000.0f;
 };
 

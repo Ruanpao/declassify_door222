@@ -60,10 +60,68 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &Adeclassify_doorCharacter::Look);
+
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::Interact);
 	}
 	else
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
+	}
+}
+
+AActor* Adeclassify_doorCharacter::SphereTraceForInteractable()
+{
+	FVector StartLocation = GetActorLocation();
+    
+	TArray<FHitResult> HitResults;
+	FCollisionShape Sphere = FCollisionShape::MakeSphere(InteractRadius);
+    
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this); 
+	bool bHit = GetWorld()->SweepMultiByChannel(
+		HitResults,
+		StartLocation,
+		StartLocation, 
+		FQuat::Identity,
+		ECC_WorldDynamic, 
+		Sphere,
+		QueryParams
+	);
+
+	DrawDebugSphere(GetWorld(), StartLocation, InteractRadius, 12, FColor::Green, false, 2.0f);
+    
+	if (bHit)
+	{
+		for (const FHitResult& HitResult : HitResults)
+		{
+			AActor* HitActor = HitResult.GetActor();
+            
+			if (HitActor && HitActor->Implements<UInteractInterface>())
+			{
+				DrawDebugPoint(GetWorld(), HitActor->GetActorLocation(), 20.0f, FColor::Red, false, 2.0f);
+                
+				UE_LOG(LogTemp, Log, TEXT("检测到可交互对象: %s"), *HitActor->GetName());
+				return HitActor;
+			}
+		}
+	}
+    
+	return nullptr;
+}
+
+void Adeclassify_doorCharacter::Interact()
+{
+	UE_LOG(LogTemp, Log, TEXT("尝试交互..."));
+    
+	AActor* InteractableActor = SphereTraceForInteractable();
+    
+	if (InteractableActor && InteractableActor->Implements<UInteractInterface>())
+	{
+		IInteractInterface::Execute_OnInteract(InteractableActor, this);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("没有找到可交互的对象"));
 	}
 }
 

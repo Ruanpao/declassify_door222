@@ -137,7 +137,7 @@ void APlayerHUD::DrawCrossHair()
 	DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor,LineThickness);
 }
 
-void APlayerHUD::CreateInteractPopWidget(bool IsClicked, bool IsNearTower, bool IsFullTower , bool IsFullLevel , bool IsIntheMidLine , FItemInInventory HoldedItem)
+void APlayerHUD::CreateInteractPopWidget(bool IsClicked, bool IsNearTower, bool IsFullTower , bool IsFullLevel , bool IsIntheMidLine , FItemInInventory HeldItem)
 {
 	if (InteractPopWidget && InteractPopWidget->IsInViewport())
 	{
@@ -149,9 +149,9 @@ void APlayerHUD::CreateInteractPopWidget(bool IsClicked, bool IsNearTower, bool 
 
 	if(InteractPopWidget)
 	{
-		if(UInteractPopWidget* InteractPopWidgetInstance = Cast<UPVZ3DInteractPopWidget>(InteractPopWidget))
+		if(UInteractPopWidget* InteractPopWidgetInstance = Cast<UInteractPopWidget>(InteractPopWidget))
 		{
-			InteractPopWidgetInstance->SendHoldedItem.Broadcast(HoldedItem);
+			InteractPopWidgetInstance->SendHeldItem.Broadcast(HeldItem);
 			InteractPopWidgetInstance->WhetherClickedAndNearTower.Broadcast(IsClicked, IsNearTower, IsFullTower, IsFullLevel, IsIntheMidLine);
 		}
 

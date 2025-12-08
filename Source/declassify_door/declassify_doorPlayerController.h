@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "declassify_doorCharacter.h"
+#include "UI/PlayerHUD.h"
 #include "declassify_doorPlayerController.generated.h"
 
 class UInputMappingContext;
@@ -26,6 +28,14 @@ protected:
 protected:
 
 	virtual void BeginPlay() override;
+
+	APlayerHUD* MyHUD;
+
+	Adeclassify_doorCharacter* MyPlayer;
+	
+	void InitializeHUD();
+	
+	FTimerHandle TimerHandle;
 
 	// End Actor interface
 };

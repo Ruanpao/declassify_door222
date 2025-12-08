@@ -6,9 +6,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Kismet/GameplayStatics.h"
 
-void UInteractPopWidget::OnButton_TakeInHandClicked()
-{
-}
+
 
 void UInteractPopWidget::NativeOnInitialized()
 {
@@ -38,4 +36,9 @@ void UInteractPopWidget::NativeOnInitialized()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("HOLYJESUS No actors with 'Player' tag found"));
 	}
+}
+
+void UInteractPopWidget::UpdateHeldItem(FItemInInventory NewHeldItem)
+{
+	HeldItem = NewHeldItem;
 }

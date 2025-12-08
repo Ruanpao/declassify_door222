@@ -21,24 +21,15 @@ struct FItemBasicInfo : public FTableRowBase
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
 	int32 MaxStackNum = -1;
+	
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
+	// FText Description = FText::FromString("Invalid Description");
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	bool IsInstance = false;
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
+	// FText Information = FText::FromString("Invalid Information");
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	UStaticMesh* Mesh = nullptr;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	FText Description = FText::FromString("Invalid Description");
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	FText Information = FText::FromString("Invalid Information");
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	FName ItemType = "None";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItenInfo")
-	int32 Price = 0;
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
+	// FName ItemType = "None";
 };
 
 USTRUCT(BlueprintType)

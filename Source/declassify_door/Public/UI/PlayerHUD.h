@@ -45,34 +45,16 @@ class DECLASSIFY_DOOR_API APlayerHUD : public AHUD
 protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> PlayerDetailWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> LevelWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
 	TSubclassOf<UUserWidget> InventoryMainWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
 	TSubclassOf<UUserWidget> InventoryInformationWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> DisposalPopWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category =  "UI")
-	TSubclassOf<UUserWidget> HoldedItemWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> InteractPopWidgetClass;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
 	UUserWidget* InventoryInformationWidget;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
 	UUserWidget* InventoryMainWidget;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
-	UUserWidget* DisposalPopWidget;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
 	UUserWidget* InteractPopWidget;

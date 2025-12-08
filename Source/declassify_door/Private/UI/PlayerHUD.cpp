@@ -29,33 +29,12 @@ void APlayerHUD::BeginPlay()
     Super::BeginPlay();
 
 
-
-    
-    
-    auto PlayerDetailWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerDetailWidgetClass);
-    
-    auto LevelWidget = CreateWidget<UUserWidget>(GetWorld(), LevelWidgetClass);
-
-    auto HoldedItemWidget = CreateWidget<UUserWidget>(GetWorld(), HoldedItemWidgetClass);
+	
 	
     InventoryInformationWidget = CreateWidget<UUserWidget>(GetWorld(), InventoryInformationWidgetClass);
 
     InventoryMainWidget = CreateWidget<UUserWidget>(GetWorld(), InventoryMainWidgetClass);
-    
-    if(PlayerDetailWidget)
-    {
-        PlayerDetailWidget->AddToViewport();
-    }
-
-    if(LevelWidget)
-    {
-        LevelWidget->AddToViewport();
-    }
-
-    if(HoldedItemWidget)
-    {
-        HoldedItemWidget->AddToViewport();
-    }
+	
 
     if(InventoryInformationWidget)
     {
@@ -103,7 +82,7 @@ void APlayerHUD::InventoryInformationVisibility()
 void APlayerHUD::RemoveRequest(int32 Index)
 {
 	RemoveIndex =  Index;
-
+/*
 	DisposalPopWidget = CreateWidget<UUserWidget>(GetWorld(), DisposalPopWidgetClass);
 
 	if(DisposalPopWidget)
@@ -115,6 +94,7 @@ void APlayerHUD::RemoveRequest(int32 Index)
 			DisposalPopWidgetInstance->Remove_2.AddUObject(this, &APlayerHUD::RemoveRequest_2);
 		}
 	}
+	*/
 	
 }
 

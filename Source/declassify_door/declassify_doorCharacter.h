@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "Interface/InteractInterface.h"
+#include "Component/InventoryComponent.h"
 
 #include "declassify_doorCharacter.generated.h"
 
@@ -18,6 +19,17 @@ class UInputMappingContext;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_DELEGATE(FSwitchToStack1);
+DECLARE_DELEGATE(FSwitchToStack2);
+DECLARE_DELEGATE(FSwitchToStack3);
+DECLARE_DELEGATE(FSwitchToStack4);
+DECLARE_DELEGATE(FSwitchToStack5);
+DECLARE_DELEGATE(FSwitchToStack6);
+DECLARE_DELEGATE(FSwitchToStack7);
+DECLARE_DELEGATE(FSwitchToStack8);
+DECLARE_DELEGATE(FSwitchToStack9);
+DECLARE_DELEGATE(FSwitchToStack10);
+
 
 UCLASS(config=Game)
 class Adeclassify_doorCharacter : public ACharacter
@@ -83,5 +95,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="MouseClick")
 	void HandleMouseClick();
+
+	void OnHoldedItemChanged(FItemInInventory Item);
+
+	void SwitchToStack1();
+	void SwitchToStack2();
+	void SwitchToStack3();
+	void SwitchToStack4();
+	void SwitchToStack5();
+	void SwitchToStack6();
+	void SwitchToStack7();
+	void SwitchToStack8();
+	void SwitchToStack9();
+	void SwitchToStack10();
+
+	UPROPERTY(VisibleAnyWhere,BlueprintReadWrite,Category="Component")
+	UInventoryComponent* InventoryComponent;
 };
 

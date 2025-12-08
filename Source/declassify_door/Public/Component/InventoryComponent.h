@@ -72,9 +72,5 @@ public:
 	void DestroyAOldSlot(int32 Index);
 	
 	void UpdateHeldSlot(int32 Index);
-
-	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 		
 };

@@ -115,34 +115,105 @@ int32 UInventoryComponent::AnyEmptySlotAvailable() const
 
 void UInventoryComponent::CreateNewSlot(FName Item_ID, int32 Index)
 {
+	Slot[Index].ID = Item_ID;
+	Slot[Index].Quantity = 1;
 }
 
 void UInventoryComponent::UpdateSlot()
 {
+	int32 SlotIndex = 0;
+	
+	while(Slot.Num() < SlotSize)
+	{
+		FItemInInventory NewSlot;
+		NewSlot.ID = "0000";
+		NewSlot.Quantity = 0;
+		NewSlot.Index = SlotIndex;
+		
+		Slot.Add(NewSlot);
+
+		SlotIndex += 1;
+	}
+	OnInventoryUpdate.Broadcast();
 }
 
 void UInventoryComponent::RemoveFromInventory(int32 Index, bool RemoveAll, bool IsConsumed)
 {
+	if(Slot[Index].Quantity == 1 or RemoveAll)
+	{
+		if(IsConsumed)
+		{
+			DestroyAOldSlot(Index);
+			UE_LOG(LogInventory, Error ,TEXT("I am Consumed"));
+
+			OnInventoryUpdate.Broadcast();
+
+			if(Index == HeldItem.Index)
+			{
+				UpdateHeldSlot(Index);
+			}
+		}
+		else
+		{
+			DestroyAOldSlot(Index);
+
+			OnInventoryUpdate.Broadcast();
+
+			if(Index == HeldItem.Index)
+			{
+				UpdateHeldSlot(Index);
+
+				UE_LOG(LogInventory , Warning , TEXT(" %d %d --- %s %d"),Index, HeldItem.Index , *HeldItem.ID.ToString(), HeldItem.Quantity);
+			}
+		}
+	}
+	else
+	{
+		if(IsConsumed)
+		{
+			RemoveOne(Index , 1);
+			UE_LOG(LogInventory, Error ,TEXT("I am Consumed"));
+
+			OnInventoryUpdate.Broadcast();
+
+			if(Index == HeldItem.Index)
+			{
+				UpdateHeldSlot(Index);
+			}
+		}
+		else
+		{
+			RemoveOne(Index, 1);
+
+			OnInventoryUpdate.Broadcast();
+			
+			if(Index == HeldItem.Index)
+			{
+				UpdateHeldSlot(Index);
+
+				UE_LOG(LogInventory , Warning , TEXT(" %d %d --- %s %d"),Index, HeldItem.Index , *HeldItem.ID.ToString(), HeldItem.Quantity);
+			}
+		}
+	}
 }
 
 void UInventoryComponent::RemoveOne(int32 Index, int32 Quantity)
 {
+	Slot[Index].Quantity -= Quantity;
+
 }
 
 void UInventoryComponent::DestroyAOldSlot(int32 Index)
 {
+	Slot[Index].ID = "0000";
+	Slot[Index].Quantity = 0;
 }
 
 void UInventoryComponent::UpdateHeldSlot(int32 Index)
 {
+	HeldItem = Slot[Index];
+	
+	HeldChanged.Broadcast(HeldItem);
+
+	UE_LOG(LogInventory , Warning , TEXT("HeldItem Changed, ID : %s , Quantity : %d"), *HeldItem.ID.ToString(), HeldItem.Quantity);
 }
-
-
-// Called every frame
-void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-

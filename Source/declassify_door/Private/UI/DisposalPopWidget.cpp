@@ -21,6 +21,7 @@ void UDisposalPopWidget::OnButton_1Clicked()
 
 void UDisposalPopWidget::OnMouseLeave_1()
 {
+	this->RemoveFromParent();
 }
 
 void UDisposalPopWidget::NativeOnInitialized()

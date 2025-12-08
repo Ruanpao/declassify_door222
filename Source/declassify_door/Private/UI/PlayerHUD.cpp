@@ -137,28 +137,6 @@ void APlayerHUD::DrawCrossHair()
 	DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor,LineThickness);
 }
 
-void APlayerHUD::CreateInteractPopWidget(bool IsClicked, bool IsNearTower, bool IsFullTower , bool IsFullLevel , bool IsIntheMidLine , FItemInInventory HeldItem)
-{
-	if (InteractPopWidget && InteractPopWidget->IsInViewport())
-	{
-		InteractPopWidget->RemoveFromParent();
-		InteractPopWidget = nullptr;
-	}
-	
-	InteractPopWidget = CreateWidget<UUserWidget>(GetWorld(), InteractPopWidgetClass);
-
-	if(InteractPopWidget)
-	{
-		if(UInteractPopWidget* InteractPopWidgetInstance = Cast<UInteractPopWidget>(InteractPopWidget))
-		{
-			InteractPopWidgetInstance->SendHeldItem.Broadcast(HeldItem);
-			InteractPopWidgetInstance->WhetherClickedAndNearTower.Broadcast(IsClicked, IsNearTower, IsFullTower, IsFullLevel, IsIntheMidLine);
-		}
-
-		InteractPopWidget->AddToViewport();
-	}
-}
-
 void APlayerHUD::UpdateMouseSituation(int32 Num)
 {
 	CurrentVisibleNum += Num;

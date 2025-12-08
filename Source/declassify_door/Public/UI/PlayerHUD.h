@@ -29,7 +29,6 @@ class DECLASSIFY_DOOR_API APlayerHUD : public AHUD
 
 	void InventoryInformationVisibility();
 
-	void ShopVisibility();
 
 	void RemoveRequest(int32 Index);
 
@@ -83,12 +82,6 @@ protected:
 
 	UFUNCTION(Blueprintable)
 	void ReceivedInfo(int32 Index);
-	
-	UFUNCTION(BlueprintCallable)
-	void ReceivedInfo_2(FName P_ID, int32 P_Quantity , int32 P_Price);
-
-	UFUNCTION(BlueprintCallable)
-	void CreateInteractPopWidget(bool IsClicked, bool IsNearTower, bool IsFullTower , bool IsFullLevel , bool IsIntheMidLine , FItemInInventory HoldedItem);
 	
 	virtual void BeginPlay() override;
 

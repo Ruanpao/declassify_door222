@@ -17,10 +17,18 @@
     <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BP/BP_PasswordWall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/BP_PasswordWall.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClickOnlyPasswordLock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClickOnlyPasswordLock.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/PasswordWall.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/PasswordWall.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/ClickOnlyPasswordLock.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/ClickOnlyPasswordLock.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/PasswordWall.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/PasswordWall.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_0.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_0.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_1.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_2.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_3.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_4.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_5.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_5.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_6.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_6.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_7.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_7.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_8.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_8.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_9.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_NumberButton_9.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_PasswordLock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_PasswordLock.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/FirstMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/FirstMap.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,19 +72,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 项目.declassify_door.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "cheng",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 项目.declassify_door.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cheng&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ 项目.declassify_door">
     <configuration name="UE5" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -518,6 +526,7 @@
       <workItem from="1765177628772" duration="1944000" />
       <workItem from="1765180008300" duration="357000" />
       <workItem from="1765183607327" duration="971000" />
+      <workItem from="1765194282384" duration="660000" />
     </task>
     <servers />
   </component>

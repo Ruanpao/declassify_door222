@@ -4,14 +4,46 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Button.h"
+#include "Components/VerticalBox.h"
+#include "Components/CanvasPanel.h"
 #include "DisposalPopWidget.generated.h"
 
 /**
  * 
  */
+DECLARE_MULTICAST_DELEGATE_OneParam(FRemove_2 , bool)
+
 UCLASS()
 class DECLASSIFY_DOOR_API UDisposalPopWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	FRemove_2 Remove_2;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI" ,  meta = (BindWidget))
+	UButton* Button_0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI" ,  meta = (BindWidget))
+	UButton* Button_1;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI" ,  meta = (BindWidget))
+	UCanvasPanel* CanvasPanel;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI" ,  meta = (BindWidget))
+	UVerticalBox* VerticalBox;
+
+	UFUNCTION(BlueprintCallable)
+	void OnButton_0Clicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnButton_1Clicked();
+
+	UFUNCTION(BlueprintCallable)
+	void OnMouseLeave_1();
+	
+protected:
+	virtual void NativeOnInitialized() override;
 	
 };

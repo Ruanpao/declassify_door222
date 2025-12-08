@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ClickableNumberButton.h"
 #include "GameFramework/Actor.h"
 #include "ClickOnlyPasswordLock.generated.h"
 

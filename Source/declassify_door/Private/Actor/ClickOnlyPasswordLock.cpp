@@ -102,6 +102,7 @@ void AClickOnlyPasswordLock::BeginPlay()
 			Button->OnButtonClicked.AddDynamic(this, &AClickOnlyPasswordLock::OnButtonClicked);
 		}
 	}
+	
 }
 
 

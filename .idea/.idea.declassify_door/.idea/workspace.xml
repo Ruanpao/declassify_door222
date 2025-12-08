@@ -15,8 +15,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_ClearButton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/Lock/BP_PasswordLock.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/Lock/BP_PasswordLock.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/C/81/RE74COHG44R67HBQ9XPJI2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/D/UW/TCVRU9GZVB73TBCVWWX1C3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClickOnlyPasswordLock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClickOnlyPasswordLock.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClickableNumberButton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClickableNumberButton.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/ClickableNumberButton.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/ClickableNumberButton.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" afterDir="false" />
     </list>
@@ -507,6 +515,7 @@
       <workItem from="1765108177197" duration="241000" />
       <workItem from="1765108600840" duration="1950000" />
       <workItem from="1765177421207" duration="131000" />
+      <workItem from="1765177628772" duration="1615000" />
     </task>
     <servers />
   </component>

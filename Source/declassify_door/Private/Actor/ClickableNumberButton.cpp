@@ -16,6 +16,8 @@ AClickableNumberButton::AClickableNumberButton()
 	ButtonMesh->SetupAttachment(RootComponent);
 
 	ButtonMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	ButtonMesh->SetCollisionObjectType(ECC_WorldDynamic);  
+	ButtonMesh->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Block); 
 	ButtonMesh->SetGenerateOverlapEvents(true);
 
 }
@@ -30,7 +32,7 @@ void AClickableNumberButton::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AClickableNumberButton::Onclick()
+void AClickableNumberButton::OnClick()
 {
 	if(PressSound && GetWorld())
 	{

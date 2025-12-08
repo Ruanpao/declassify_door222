@@ -42,6 +42,9 @@ class Adeclassify_doorCharacter : public ACharacter
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* InteractAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* MouseClickAction;
 	
 public:
 	Adeclassify_doorCharacter();
@@ -77,5 +80,8 @@ public:
 	AActor* SphereTraceForInteractable();
 	UPROPERTY(EditAnywhere, Category = "Interaction")
 	float InteractRadius = 3000.0f;
+
+	UFUNCTION(BlueprintCallable, Category="MouseClick")
+	void HandleMouseClick();
 };
 

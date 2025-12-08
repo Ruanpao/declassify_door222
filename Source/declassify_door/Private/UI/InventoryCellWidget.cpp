@@ -12,7 +12,7 @@ void UInventoryCellWidget::UpdateInventoryCellWidget(FName P_ID, int32 P_Quantit
 
 	if(!Datatable)
 	{
-		Datatable = LoadObject<UDataTable>(this, TEXT("/Script/Engine.DataTable'/Game/MyAsset/DataTable/DT_ItemDataTable.DT_ItemDataTable'"));
+		Datatable = LoadObject<UDataTable>(this, TEXT("/Script/Engine.DataTable'/Game/DataTable/DT_Item.DT_Item'"));
 	}
 
 	if(Datatable)

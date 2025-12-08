@@ -17,7 +17,7 @@ struct FItemBasicInfo : public FTableRowBase
 	UTexture2D* Icon = nullptr;;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	bool Stackable = false;
+	UStaticMesh* Mesh = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
 	int32 MaxStackNum = -1;

@@ -15,7 +15,7 @@ UInventoryComponent::UInventoryComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-	Datatable = LoadObject<UDataTable>(this, TEXT("")); //配置我的数据表路径
+	Datatable = LoadObject<UDataTable>(this, TEXT("/Script/Engine.DataTable'/Game/DataTable/DT_Item.DT_Item'")); //配置我的数据表路径
 
 	
 	// ...
@@ -27,6 +27,9 @@ void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	UpdateSlot();
+	UE_LOG(LogInventory, Warning, TEXT("Nakamura 00 Slot 数组大小: %d"), Slot.Num());
+
+	
 	HeldItem = Slot[0];
 	AActor* OwnerActor = GetOwner();
 	if (!OwnerActor)

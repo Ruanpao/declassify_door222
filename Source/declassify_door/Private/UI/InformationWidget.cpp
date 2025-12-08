@@ -24,7 +24,7 @@ void UInformationWidget::ShowInfo(FItemInInventory HoldedItem)
 	{
 		if(ID == "0000")
 		{
-			Icon = LoadObject<UTexture2D>(this, TEXT("/Script/Engine.Texture2D'/Game/MyAsset/Texture/ItemNone.ItemNone'"));
+			Icon = LoadObject<UTexture2D>(this, TEXT("/Script/Engine.DataTable'/Game/DataTable/DT_Item.DT_Item'"));
 			
 			if(DetailBox && DescriptionBox && InformationBox)
 			{

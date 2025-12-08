@@ -3,6 +3,7 @@
 
 #include "Actor/ClickOnlyPasswordLock.h"
 #include "Kismet/GameplayStatics.h"
+#include "Actor/ClickableNumberButton.h"
 
 AClickOnlyPasswordLock::AClickOnlyPasswordLock()
 {
@@ -28,15 +29,16 @@ void AClickOnlyPasswordLock::OnButtonClicked(int32 ButtonNumber)
 	{
 		return;
 	}
-	if(CurrentPassword.Len()>= PasswordLength)
-	{
-		return;
-	}
 
 	//添加答案
 	CurrentPassword.AppendInt(ButtonNumber);
 	//播放音效
 	PlaySound(ClickSound);
+
+	if(CurrentPassword.Len() == PasswordLength)
+	{
+		ConfirmButton();
+	}
 }
 
 void AClickOnlyPasswordLock::ClearButton()
@@ -89,6 +91,17 @@ void AClickOnlyPasswordLock::BeginPlay()
 	Super::BeginPlay();
 	CurrentPassword = "";
 	bIsUnlocked = false;
+
+	TArray<AActor*> FoundButtons;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AClickableNumberButton::StaticClass(), FoundButtons);
+	
+	for (AActor* ButtonActor : FoundButtons)
+	{
+		if (AClickableNumberButton* Button = Cast<AClickableNumberButton>(ButtonActor))
+		{
+			Button->OnButtonClicked.AddDynamic(this, &AClickOnlyPasswordLock::OnButtonClicked);
+		}
+	}
 }
 
 

@@ -25,7 +25,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	//被点击时
-	void Onclick();
+	UFUNCTION(BlueprintCallable, Category="Button")
+	void OnClick();
 
 	void SetButtonNumber(int32 Number) {ButtonNumber = Number;}
 

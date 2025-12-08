@@ -62,6 +62,8 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &Adeclassify_doorCharacter::Look);
 
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::Interact);
+
+		EnhancedInputComponent->BindAction(MouseClickAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::HandleMouseClick);
 	}
 	else
 	{
@@ -107,6 +109,77 @@ AActor* Adeclassify_doorCharacter::SphereTraceForInteractable()
 	}
     
 	return nullptr;
+}
+
+void Adeclassify_doorCharacter::HandleMouseClick()
+{
+	if(!Controller)
+	{
+		return;
+	}
+
+	APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	if(!PlayerController)
+	{
+		return;
+	}
+
+	//获得视口大小
+	int32 ViewportSizeX, ViewportSizeY;
+	PlayerController->GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+	float CenterX = ViewportSizeX / 2.0f;
+	float CenterY = ViewportSizeY / 2.0f;
+
+	//屏幕中心发射
+	FVector WorldLocation, WorldDirection;
+	PlayerController->DeprojectScreenPositionToWorld(CenterX, CenterY, WorldLocation, WorldDirection);
+
+	FVector Start = WorldLocation;
+	FVector End = Start + (WorldDirection * InteractRadius);
+	
+	DrawDebugLine(
+		GetWorld(),
+		Start,
+		End,
+		FColor::Green,
+		false,  
+		0.5f,   
+		0,      
+		2.0f    
+	);
+	
+	DrawDebugPoint(
+		GetWorld(),
+		Start,
+		10.0f,
+		FColor::Blue,
+		false,
+		0.5f
+	);
+	
+	//射线检测
+	FHitResult HitResult;
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult,Start,End,ECC_WorldDynamic,QueryParams);
+
+	if(bHit)
+	{
+		AActor* HitActor = HitResult.GetActor();
+		if(HitActor)
+		{
+			UE_LOG(LogTemp, Display, TEXT("射线检测到物体: %s"), *HitActor->GetName()); 
+			
+			UFunction* ClickFunction = HitActor->FindFunction(FName("OnClick"));
+			if(ClickFunction)
+			{
+				HitActor->ProcessEvent(ClickFunction, nullptr);
+			}
+			
+		}
+	}
 }
 
 void Adeclassify_doorCharacter::Interact()

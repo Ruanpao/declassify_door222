@@ -14,12 +14,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="594eaea0-ae03-47f9-8cd6-76d7ceaf610a" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InteractPopWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InteractPopWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/PlayerHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/PlayerHUD.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/UI.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/UI/PlayerHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/PlayerHUD.h" afterDir="false" />
+    <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/ClearButton.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/ClearButton.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,11 +27,6 @@
     <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="main" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -46,7 +38,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Ruanpao/declassify_door222.git&quot;,
-    &quot;accountId&quot;: &quot;07f6dc5f-0eb6-4562-813c-b4018cc5ef1b&quot;
+    &quot;accountId&quot;: &quot;3ff38165-45ff-43ea-a5ce-644ece139959&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -62,20 +54,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C++ 项目.declassify_door.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Huang",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C++ 项目.declassify_door.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;cheng&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ 项目.declassify_door">
     <configuration name="UE5" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -506,15 +497,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="594eaea0-ae03-47f9-8cd6-76d7ceaf610a" name="更改" comment="" />
+      <changelist id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="" />
       <created>1765108176558</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1765108176558</updated>
       <workItem from="1765108177197" duration="241000" />
       <workItem from="1765108600840" duration="1950000" />
-      <workItem from="1765177095376" duration="251000" />
-      <workItem from="1765177428475" duration="487000" />
+      <workItem from="1765177421207" duration="131000" />
+      <workItem from="1765177628772" duration="1944000" />
     </task>
     <servers />
   </component>
@@ -522,29 +513,6 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="Huang" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

@@ -8,87 +8,56 @@
 #include "Blueprint/UserWidget.h"
 #include "../Interface/ShowInfoInterface.h"
 #include "PlayerHUD.generated.h"
+// 前向声明
+class UInventoryWidget;
+class UInventoryComponent;
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FSendInfo, FName , int32)
+// 委托声明
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHoledSlotChanged, int32, SlotIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnRemoveItem, int32, SlotIndex, bool, RemoveAll, bool, IsConsumed);
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHeldSlotChanged , int32)
-
-DECLARE_MULTICAST_DELEGATE_ThreeParams(FRemoveItem , int32 , bool , bool)
-
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMouseSituationChanged , bool)
 
 UCLASS()
 class DECLASSIFY_DOOR_API APlayerHUD : public AHUD
 {
 	GENERATED_BODY()
 
-	public:
-	int32 RemoveIndex;
-	
-	virtual void DrawHUD() override;
-
-	void InventoryInformationVisibility();
-
-
-	void RemoveRequest(int32 Index);
-
-	void RemoveRequest_2(bool RemoveAll);
-	
-	FSendInfo SendInfo;
-
-	FOnHeldSlotChanged OnHoledSlotChanged;
-
-	FRemoveItem RemoveItem;
-
-	FOnMouseSituationChanged OnMouseSituationChanged;
+public:
+	APlayerHUD();
 
 protected:
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> PlayerDetailWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> LevelWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> InventoryMainWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> InventoryInformationWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UI")
-	TSubclassOf<UUserWidget> DisposalPopWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category =  "UI")
-	TSubclassOf<UUserWidget> HoldedItemWidgetClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> InteractPopWidgetClass;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
-	UUserWidget* InventoryInformationWidget;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
-	UUserWidget* InventoryMainWidget;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
-	UUserWidget* DisposalPopWidget;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite , Category = "UIInstance")
-	UUserWidget* InteractPopWidget;
-
-	UPROPERTY(EditDefaultsOnly , BlueprintReadWrite , Category = "Num")
-	int32 CurrentVisibleNum = 0;
-
-	UFUNCTION(Blueprintable)
-	void ReceivedInfo(int32 Index);
-	
 	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintCallable)
-	void UpdateMouseSituation(int32 Num);
+public:
+	// 委托
+	UPROPERTY(BlueprintAssignable, Category = "Inventory")
+	FOnHoledSlotChanged OnHoledSlotChanged;
 
-private:
-	void DrawCrossHair();
-	
+	UPROPERTY(BlueprintAssignable, Category = "Inventory")
+	FOnRemoveItem RemoveItem;
+
+	// 更新手持物品槽位
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void UpdateHeldSlot(int32 SlotIndex);
+
+	// 从库存移除物品
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void RemoveItemFromInventory(int32 SlotIndex, bool RemoveAll, bool IsConsumed);
+
+protected:
+	// 背包UI类引用
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UInventoryWidget> InventoryWidgetClass;
+
+	// 背包UI实例
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
+	UInventoryWidget* InventoryWidget;
+
+	// 初始化UI
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void InitializeUI();
+
+	// 获取玩家库存组件
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UInventoryComponent* GetPlayerInventoryComponent() const;
 };

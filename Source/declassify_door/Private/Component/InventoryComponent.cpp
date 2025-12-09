@@ -4,6 +4,7 @@
 #include "Component/InventoryComponent.h"
 #include "UI/PlayerHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "Layers/LayersSubsystem.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogInventory, All, All);
 
@@ -11,61 +12,132 @@ DEFINE_LOG_CATEGORY_STATIC(LogInventory, All, All);
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+	
 	PrimaryComponentTick.bCanEverTick = false;
 
-	Datatable = LoadObject<UDataTable>(this, TEXT("")); //配置我的数据表路径
-
-	
-	// ...
+	Datatable = LoadObject<UDataTable>(this, TEXT("/Script/Engine.DataTable'/Game/DataTable/DT_Item.DT_Item'"));
+    
+	if (Datatable)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::Constructor - DataTable loaded successfully: %s"), *Datatable->GetName());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("UInventoryComponent::Constructor - Failed to load DataTable"));
+	}
 }
-
-
-// Called when the game starts
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	UpdateSlot();
-	HeldItem = Slot[0];
-	AActor* OwnerActor = GetOwner();
-	if (!OwnerActor)
-	{
-		UE_LOG(LogInventory, Error, TEXT("Inventory has no owner actor!"));
-		return;
-	}
+	UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Start"));
+    
+    // 初始化库存槽位
+    UpdateSlot();
+    
+    // 设置初始手持物品为第一个槽位
+    HeldItem = Slot[5];
+    UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Initial HeldItem: ID=%s, Quantity=%d, Index=%d"), 
+        *HeldItem.ID.ToString(), HeldItem.Quantity, HeldItem.Index);
+    
+    // 绑定到玩家HUD的委托
+    AActor* OwnerActor = GetOwner();
+    if (OwnerActor && OwnerActor->ActorHasTag(FName("Player")))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Owner is player, setting up HUD bindings"));
+        
+        if (APawn* PlayerPawn = Cast<APawn>(OwnerActor))
+        {
+            APlayerController* PlayerController = Cast<APlayerController>(PlayerPawn->GetController());
+            if (PlayerController)
+            {
+                if (APlayerHUD* HUD = Cast<APlayerHUD>(PlayerController->GetHUD()))
+                {
+                    HUD->OnHoledSlotChanged.AddDynamic(this, &UInventoryComponent::UpdateHeldSlot);
+                    HUD->RemoveItem.AddDynamic(this, &UInventoryComponent::RemoveFromInventory);
+                    UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - HUD delegates bound successfully"));
+                }
+                else
+                {
+                    UE_LOG(LogTemp, Error, TEXT("UInventoryComponent::BeginPlay - HUD is not APlayerHUD"));
+                }
+            }
+            else
+            {
+                UE_LOG(LogTemp, Error, TEXT("UInventoryComponent::BeginPlay - PlayerController is NULL"));
+            }
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Owner is not player or has no player tag"));
+    }
+    
+    // 测试：添加一个物品到库存
+    UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Adding test item ID '4' to inventory"));
+    AddToInventory(FName("4"), 1);
+	AddToInventory(FName("3"), 1);
 
-	if (OwnerActor->ActorHasTag(FName("Player")))
-	{
-		// 确保 Owner 是 Pawn（玩家角色）
-		if (APawn* PlayerPawn = Cast<APawn>(OwnerActor))
-		{
-			// 获取玩家控制器
-			APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-			if (PlayerController && PlayerController->GetPawn() == PlayerPawn)
-			{
-				// 获取 HUD 并绑定委托（仅玩家 Inventory 执行）
-				if (APlayerHUD* HUD = Cast<APlayerHUD>(PlayerController->GetHUD()))
-				{
-					HUD->OnHoledSlotChanged.AddUObject(this, &UInventoryComponent::UpdateHeldSlot);
-					HUD->RemoveItem.AddUObject(this, &UInventoryComponent::RemoveFromInventory);
-                    
-					UE_LOG(LogInventory, Log, TEXT("Player Inventory bound to HUD successfully"));
-				}
-			}
-		}
-	}
-	
-	else
-	{
-		UE_LOG(LogInventory, Log, TEXT("This is not a player inventory, skipping HUD binding"));
-	}
-	
+
+    // 打印所有槽位信息
+    UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Current inventory slots:"));
+    for(auto Item : Slot)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Slot %d: ID=%s, Quantity=%d"), 
+            Item.Index, *Item.ID.ToString(), Item.Quantity);
+    }
+    
+    UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Completed"));
 }
 
 bool UInventoryComponent::AddToInventory(const FName Item_ID, int32 Quantity)
 {
-	return true;
+	UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::AddToInventory - ItemID: %s, Quantity: %d"), 
+		*Item_ID.ToString(), Quantity);
+    
+	int32 LocalQuantityRemaining = Quantity;
+	bool LocalHasFailed = false;
+
+	while(LocalQuantityRemaining > 0 && !LocalHasFailed)
+	{
+		FFindSlot FindSlotResult = FindSlot(Item_ID);
+        
+		if(FindSlotResult.FindSlot)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::AddToInventory - Found existing slot at index %d"), 
+				FindSlotResult.SlotIndex);
+			AddOne(FindSlotResult.SlotIndex, 1);
+			OnInventoryUpdate.Broadcast();
+
+			if(FindSlotResult.SlotIndex == HeldItem.Index)
+			{
+				UpdateHeldSlot(FindSlotResult.SlotIndex);
+			}
+
+			LocalQuantityRemaining -= 1;
+		}
+		else if (AnyEmptySlotAvailable() >= 0)
+		{
+			int32 EmptySlotIndex = AnyEmptySlotAvailable();
+			UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::AddToInventory - Creating new slot at index %d"), 
+				EmptySlotIndex);
+			CreateNewSlot(Item_ID, EmptySlotIndex);
+			OnInventoryUpdate.Broadcast();
+
+			if(EmptySlotIndex == HeldItem.Index)
+			{
+				UpdateHeldSlot(EmptySlotIndex);
+			}
+
+			LocalQuantityRemaining -= 1;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::AddToInventory - No available slots"));
+			LocalHasFailed = true;
+		}
+	}
+
+	return LocalHasFailed;
 }
 
 FFindSlot UInventoryComponent::FindSlot(FName Item_ID)
@@ -78,7 +150,7 @@ FFindSlot UInventoryComponent::FindSlot(FName Item_ID)
 	{
 		if(Item_ID == Slot[index].ID)
 		{
-			if(FItemBasicInfo* FoundItemInfo = Datatable->FindRow<FItemBasicInfo>(Item_ID , ""))
+			if(FItemBasicInfo* FoundItemInfo = Datatable->FindRow<FItemBasicInfo>(Item_ID , "/Script/Engine.DataTable'/Game/DataTable/DT_Item.DT_Item'"))
 			{
 				if(Slot[index].Quantity < FoundItemInfo->MaxStackNum)
 				{
@@ -98,6 +170,8 @@ FFindSlot UInventoryComponent::FindSlot(FName Item_ID)
 
 void UInventoryComponent::AddOne(int32 Index, int32 Quantity)
 {
+	Slot[Index].Quantity += Quantity;
+
 }
 
 int32 UInventoryComponent::AnyEmptySlotAvailable() const

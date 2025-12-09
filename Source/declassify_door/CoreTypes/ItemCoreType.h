@@ -17,28 +17,19 @@ struct FItemBasicInfo : public FTableRowBase
 	UTexture2D* Icon = nullptr;;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	bool Stackable = false;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	int32 MaxStackNum = -1;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	bool IsInstance = false;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
 	UStaticMesh* Mesh = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	FText Description = FText::FromString("Invalid Description");
+	int32 MaxStackNum = -1;
+	
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
+	// FText Description = FText::FromString("Invalid Description");
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	FText Information = FText::FromString("Invalid Information");
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
+	// FText Information = FText::FromString("Invalid Information");
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
-	FName ItemType = "None";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItenInfo")
-	int32 Price = 0;
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ItemInfo")
+	// FName ItemType = "None";
 };
 
 USTRUCT(BlueprintType)
@@ -54,37 +45,4 @@ struct FItemInInventory
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotInfo")
 	int32 Quantity = 0;
-};
-
-USTRUCT(BlueprintType)
-struct FShopStack : public FTableRowBase
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName LevelName = "00";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack01 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack02 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack03 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack04 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack05 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack06 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack07 = "0000";
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="ShopStack")
-	FName Stack08 = "0000";
 };

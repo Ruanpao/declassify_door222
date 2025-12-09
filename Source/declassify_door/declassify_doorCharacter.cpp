@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "UI/PlayerHUD.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
@@ -20,6 +21,8 @@ Adeclassify_doorCharacter::Adeclassify_doorCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
+
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 		
 	// Create a CameraComponent	
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
@@ -36,12 +39,24 @@ Adeclassify_doorCharacter::Adeclassify_doorCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	Tags.Add(FName("Player"));
+
 }
 
 void Adeclassify_doorCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("Character BeginPlay"));
+	if (InventoryComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InventoryComponent is valid"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("InventoryComponent is NULL!"));
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -64,6 +79,17 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::Interact);
 
 		EnhancedInputComponent->BindAction(MouseClickAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::HandleMouseClick);
+
+		EnhancedInputComponent->BindAction(SwitchToStack1Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack1);
+		EnhancedInputComponent->BindAction(SwitchToStack2Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack2);
+		EnhancedInputComponent->BindAction(SwitchToStack3Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack3);
+		EnhancedInputComponent->BindAction(SwitchToStack4Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack4);
+		EnhancedInputComponent->BindAction(SwitchToStack5Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack5);
+		EnhancedInputComponent->BindAction(SwitchToStack6Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack6);
+		EnhancedInputComponent->BindAction(SwitchToStack7Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack7);
+		EnhancedInputComponent->BindAction(SwitchToStack8Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack8);
+		EnhancedInputComponent->BindAction(SwitchToStack9Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack9);
+		EnhancedInputComponent->BindAction(SwitchToStack10Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack10);
 	}
 	else
 	{
@@ -118,8 +144,7 @@ void Adeclassify_doorCharacter::HandleMouseClick()
 		return;
 	}
 
-	APlayerController* PlayerController = Cast<APlayerController>(Controller);
-	if(!PlayerController)
+	APlayerController* PlayerController = Cast<APlayerController>(Controller);	if(!PlayerController)
 	{
 		return;
 	}
@@ -222,5 +247,98 @@ void Adeclassify_doorCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+
+void Adeclassify_doorCharacter::SwitchToStack1()
+{
+
+	UE_LOG(LogTemp, Warning, TEXT("SwitchToStack1 called"));
+	if(InventoryComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InventoryComponent valid, updating to slot 0"));
+		InventoryComponent->UpdateHeldSlot(0);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("InventoryComponent is NULL!"));
+	}
+	
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(0);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack2()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(1);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack3()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(2);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack4()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(3);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack5()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(4);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack6()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(5);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack7()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(6);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack8()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(7);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack9()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(8);
+	}
+}
+
+void Adeclassify_doorCharacter::SwitchToStack10()
+{
+	if(InventoryComponent)
+	{
+		InventoryComponent->UpdateHeldSlot(9);
 	}
 }

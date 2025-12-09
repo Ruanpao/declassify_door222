@@ -116,7 +116,10 @@ void ARotateDoor::SetDoorColor(const FLinearColor& NewColor)
 	if(DynamicMaterial)
 	{
 		DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), NewColor);
-		UE_LOG(LogTemp, Log, TEXT("给门上色成功"));
+		if(PaintSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, PaintSound, GetActorLocation());
+		}
 	}
 	
 	if (LinkedHidePass)

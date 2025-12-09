@@ -45,6 +45,10 @@ void AKeyActor::OnInteract_Implementation(AActor* Interactor)
 	{
 		if (Key)
 		{
+			if(PickupSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, PickupSound, GetActorLocation());
+			}
 			Key->Destroy();
 		}
 	}

@@ -64,6 +64,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sound", meta = (AllowPrivateAccess = "true"))
 	class USoundBase* TeleportSound;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sound", meta = (AllowPrivateAccess = "true"))
+	class USoundBase* PaintSound;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleport", meta = (AllowPrivateAccess = "true"))
 	FVector TeleportTargetLocation;
 

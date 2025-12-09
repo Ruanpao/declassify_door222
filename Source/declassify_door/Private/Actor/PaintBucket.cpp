@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "declassify_door/declassify_doorCharacter.h"
 #include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 
 APaintBucket::APaintBucket()
 {
@@ -45,6 +46,10 @@ void APaintBucket::OnInteract_Implementation(AActor* Interactor)
 			{
 				MyCharacter->PickupPaint(PaintColor);
 			}
+		}
+		if(PickupSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, PickupSound, GetActorLocation());
 		}
 		Destroy();
 	}

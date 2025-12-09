@@ -30,4 +30,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category="Key")
 	class UStaticMeshComponent* KeyMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sound", meta = (AllowPrivateAccess = "true"))
+	class USoundBase* PickupSound;
 };

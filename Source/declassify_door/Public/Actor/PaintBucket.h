@@ -29,4 +29,7 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere,Category = "Paint")
 	class UStaticMeshComponent* BucketMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Sound", meta = (AllowPrivateAccess = "true"))
+	class USoundBase* PickupSound;
 };

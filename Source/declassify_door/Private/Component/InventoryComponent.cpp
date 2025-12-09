@@ -6,7 +6,6 @@
 #include "declassify_door/declassify_doorCharacter.h"
 #include "UI/PlayerHUD.h"
 #include "Kismet/GameplayStatics.h"
-#include "Layers/LayersSubsystem.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogInventory, All, All);
 

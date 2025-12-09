@@ -52,4 +52,7 @@ protected:
 	void OnHeldItemChanged(FItemInInventory HeldItem);
 
 	void RefreshInventory();
+
+private:
+	bool bInitialized = false;
 };

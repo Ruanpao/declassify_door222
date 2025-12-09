@@ -10,17 +10,20 @@ void UInventoryWidget::NativeConstruct()
 {
     Super::NativeConstruct();
 
+    Super::NativeConstruct();
+
     SetVisibility(ESlateVisibility::Visible);
     UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::NativeConstruct called"));
 
-    if (InventoryComponent)
+    // 只在InventoryComponent有效但尚未初始化时进行初始化
+    if (InventoryComponent && !bInitialized)
     {
-        UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::NativeConstruct - InventoryComponent is valid, initializing inventory"));
+        UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::NativeConstruct - Initializing inventory"));
         InitializeInventory(InventoryComponent);
     }
-    else
+    else if (!InventoryComponent)
     {
-        UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::NativeConstruct - InventoryComponent is NULL, will initialize later"));
+        UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::NativeConstruct - InventoryComponent is NULL"));
     }
 
     if (SlotContainer)
@@ -36,6 +39,11 @@ void UInventoryWidget::NativeConstruct()
 void UInventoryWidget::InitializeInventory(UInventoryComponent* InventoryComp)
 {
     UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::InitializeInventory - Start"));
+    if (bInitialized)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::InitializeInventory - Already initialized, skipping"));
+        return;
+    }
     
     InventoryComponent = InventoryComp;
     
@@ -105,6 +113,8 @@ void UInventoryWidget::InitializeInventory(UInventoryComponent* InventoryComp)
     // 初始刷新
     RefreshInventory();
     UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::InitializeInventory - Completed"));
+    bInitialized = true;
+
 }
 
 void UInventoryWidget::SelectSlot(int32 SlotIndex)

@@ -53,24 +53,34 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="HeldItem")
 	FItemInInventory HeldItem;
 
+	UFUNCTION()
 	bool AddToInventory(const FName Item_ID, int32 Quantity);
 
+	UFUNCTION()
 	FFindSlot FindSlot(FName Item_ID);
 
+	UFUNCTION()
 	void AddOne(int32 Index, int32 Quantity);
 
+	UFUNCTION()
 	int32 AnyEmptySlotAvailable() const;
 
+	UFUNCTION()
 	void CreateNewSlot(FName Item_ID, int32 Index);
 
+	UFUNCTION()
 	void UpdateSlot();
 
+	UFUNCTION()
 	void RemoveFromInventory(int32 Index , bool RemoveAll , bool IsConsumed);
 
+	UFUNCTION()
 	void RemoveOne(int32 Index, int32 Quantity);
 
+	UFUNCTION()
 	void DestroyAOldSlot(int32 Index);
 	
+	UFUNCTION()
 	void UpdateHeldSlot(int32 Index);
 		
 };

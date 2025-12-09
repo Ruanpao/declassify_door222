@@ -6,7 +6,6 @@
 #include "Engine/Engine.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
-#include "Camera/CameraComponent.h"
 
 ARotateDoor::ARotateDoor()
 {
@@ -56,6 +55,7 @@ void ARotateDoor::RotateDoor()
 	bIsRotated = false;
 
 	bIsUpsideDown = !bIsUpsideDown;
+	
 }
 
 void ARotateDoor::OnInteract_Implementation(AActor* Interactor)
@@ -79,7 +79,7 @@ void ARotateDoor::OnInteract_Implementation(AActor* Interactor)
 		{
 			if (bIsUpsideDown)
 			{
-				TeleportLocation.Z -= 300.0f;  
+				TeleportLocation.Z -= 4700.0f;  
 			}
 			else
 			{
@@ -101,5 +101,20 @@ void ARotateDoor::OnInteract_Implementation(AActor* Interactor)
 void ARotateDoor::SetTeleportTarget(const FVector& NewTargetLocation)
 {
 	TeleportTargetLocation = NewTargetLocation;
+}
+
+void ARotateDoor::SetDoorColor(const FLinearColor& NewColor)
+{
+	if(!DoorMesh) return;
+
+	int32 MaterialIndex = 1;
+	
+	// 创建动态材质实例
+	UMaterialInstanceDynamic* DynamicMaterial = DoorMesh->CreateAndSetMaterialInstanceDynamic(MaterialIndex);
+	if(DynamicMaterial)
+	{
+		DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), NewColor);
+		UE_LOG(LogTemp, Log, TEXT("给门上色成功"));
+	}
 }
 

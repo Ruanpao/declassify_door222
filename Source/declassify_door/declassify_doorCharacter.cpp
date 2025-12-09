@@ -68,6 +68,9 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		EnhancedInputComponent->BindAction(MouseClickAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::HandleMouseClick);
 
 		EnhancedInputComponent->BindAction(RotationAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::RotateNearbyDoor);
+
+		EnhancedInputComponent->BindAction(PaintAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::PaintDoor);
+	
 	}
 	else
 	{
@@ -194,7 +197,7 @@ void Adeclassify_doorCharacter::RotateNearbyDoor()
 	for (AActor* DoorActor : FoundDoors)
 	{
 		float Distance = FVector::Dist(GetActorLocation(), DoorActor->GetActorLocation());
-		if (Distance < 500.0f)  
+		if (Distance < 300.0f)  
 		{
 			if (ARotateDoor* Door = Cast<ARotateDoor>(DoorActor))
 			{
@@ -203,6 +206,36 @@ void Adeclassify_doorCharacter::RotateNearbyDoor()
 			}
 		}
 	}
+}
+
+void Adeclassify_doorCharacter::PaintDoor()
+{
+	if(!bHasPaint)
+	{
+		return;
+	}
+	
+	TArray<AActor*> FoundDoors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARotateDoor::StaticClass(), FoundDoors);
+	
+	for (AActor* DoorActor : FoundDoors)
+	{
+		float Distance = FVector::Dist(GetActorLocation(), DoorActor->GetActorLocation());
+		if (Distance < 500.0f)  
+		{
+			if (ARotateDoor* Door = Cast<ARotateDoor>(DoorActor))
+			{
+				Door->SetDoorColor(CurrentPaintColor);
+				return;  
+			}
+		}
+	}
+}
+
+void Adeclassify_doorCharacter::PickupPaint(const FLinearColor& NewColor)
+{
+	CurrentPaintColor = NewColor;
+	bHasPaint = true;
 }
 
 void Adeclassify_doorCharacter::Interact()

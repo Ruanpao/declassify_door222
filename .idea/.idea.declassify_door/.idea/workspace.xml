@@ -16,12 +16,14 @@
   <component name="ChangeListManager">
     <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BP/BP_PasswordWall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/BP_PasswordWall.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/BP_RotateDoor_Up.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/BP_RotateDoor_Up.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3_fbx.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3_fbx.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Map/FirstMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/FirstMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/PasswordWall.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/PasswordWall.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/PasswordWall.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/PasswordWall.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/RotateDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/RotateDoor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/RotateDoor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/RotateDoor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" afterDir="false" />
     </list>
@@ -55,6 +57,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/KeyTeleportDoor.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/PaintBucket.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/PasswordWall.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/RotateDoor.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/declassify_door/Public/Actor/KeyTeleportDoor.h" root0="FORCE_HIGHLIGHTING" />
@@ -526,7 +529,7 @@
       <workItem from="1765180008300" duration="357000" />
       <workItem from="1765183607327" duration="971000" />
       <workItem from="1765194282384" duration="11534000" />
-      <workItem from="1765247614461" duration="3071000" />
+      <workItem from="1765247614461" duration="7227000" />
     </task>
     <servers />
   </component>

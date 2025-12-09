@@ -48,6 +48,9 @@ class Adeclassify_doorCharacter : public ACharacter
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* RotationAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* PaintAction;
 public:
 	Adeclassify_doorCharacter();
 
@@ -88,5 +91,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Door")
 	void RotateNearbyDoor();
+
+	UFUNCTION(BlueprintCallable, Category="Door")
+	void PaintDoor();
+
+	//当前携带的油漆颜色
+	UPROPERTY(BlueprintReadOnly, Category="Paint")
+	FLinearColor CurrentPaintColor = FLinearColor::White;
+
+	//是否携带油漆
+	UPROPERTY(BlueprintReadOnly, Category="Paint")
+	bool bHasPaint = false;
+
+	UFUNCTION(BlueprintCallable,Category = "Paint")
+	void PickupPaint(const FLinearColor& NewColor);
 };
 

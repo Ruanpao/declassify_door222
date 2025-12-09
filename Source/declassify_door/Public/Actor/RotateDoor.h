@@ -37,11 +37,15 @@ public:
 	UFUNCTION(BlueprintCallable,Category = "Door")
 	bool IsDoorUpsideDown() const{return bIsUpsideDown;}
 
+	UFUNCTION(BlueprintCallable,Category = "Door")
+	void SetDoorColor(const FLinearColor& NewColor);
+	
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Door")
 	float TeleportDistance = 200.0f;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Door")
 	bool bIsRotated = false;
+
 private:
 	UPROPERTY(VisibleAnywhere,Category = "Door")
 	class UStaticMeshComponent* DoorMesh;

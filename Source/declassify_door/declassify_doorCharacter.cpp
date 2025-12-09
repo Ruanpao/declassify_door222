@@ -11,6 +11,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "Actor/RotateDoor.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -90,6 +92,11 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		EnhancedInputComponent->BindAction(SwitchToStack8Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack8);
 		EnhancedInputComponent->BindAction(SwitchToStack9Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack9);
 		EnhancedInputComponent->BindAction(SwitchToStack10Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack10);
+
+		EnhancedInputComponent->BindAction(RotationAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::RotateNearbyDoor);
+
+		EnhancedInputComponent->BindAction(PaintAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::PaintDoor);
+	
 	}
 	else
 	{
@@ -205,6 +212,55 @@ void Adeclassify_doorCharacter::HandleMouseClick()
 			
 		}
 	}
+}
+
+void Adeclassify_doorCharacter::RotateNearbyDoor()
+{
+	TArray<AActor*> FoundDoors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARotateDoor::StaticClass(), FoundDoors);
+	
+	for (AActor* DoorActor : FoundDoors)
+	{
+		float Distance = FVector::Dist(GetActorLocation(), DoorActor->GetActorLocation());
+		if (Distance < 300.0f)  
+		{
+			if (ARotateDoor* Door = Cast<ARotateDoor>(DoorActor))
+			{
+				Door->RotateDoor();
+				return;  
+			}
+		}
+	}
+}
+
+void Adeclassify_doorCharacter::PaintDoor()
+{
+	if(!bHasPaint)
+	{
+		return;
+	}
+	
+	TArray<AActor*> FoundDoors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARotateDoor::StaticClass(), FoundDoors);
+	
+	for (AActor* DoorActor : FoundDoors)
+	{
+		float Distance = FVector::Dist(GetActorLocation(), DoorActor->GetActorLocation());
+		if (Distance < 500.0f)  
+		{
+			if (ARotateDoor* Door = Cast<ARotateDoor>(DoorActor))
+			{
+				Door->SetDoorColor(CurrentPaintColor);
+				return;  
+			}
+		}
+	}
+}
+
+void Adeclassify_doorCharacter::PickupPaint(const FLinearColor& NewColor)
+{
+	CurrentPaintColor = NewColor;
+	bHasPaint = true;
 }
 
 void Adeclassify_doorCharacter::Interact()

@@ -19,6 +19,18 @@
       <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" afterDir="false" />
+    <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP/BP_RotateDoor_Up.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP/BP_RotateDoor_Up.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3_fbx.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Fab/Hinged_door_03/hinged_door3_fbx.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Map/FirstMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Map/FirstMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/RotateDoor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Actor/RotateDoor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/RotateDoor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Actor/RotateDoor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +41,11 @@
     <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -45,8 +62,16 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://D:/UE_5.4/Engine/Source/Runtime/Engine/Classes/Engine/TimerHandle.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/KeyTeleportDoor.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/PaintBucket.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/PasswordWall.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Private/Actor/RotateDoor.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Public/Actor/KeyTeleportDoor.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Public/Actor/PasswordWall.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/declassify_door/Public/Actor/RotateDoor.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -523,6 +548,10 @@
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
       <updated>1765196521808</updated>
+      <workItem from="1765180008300" duration="357000" />
+      <workItem from="1765183607327" duration="971000" />
+      <workItem from="1765194282384" duration="11534000" />
+      <workItem from="1765247614461" duration="7227000" />
     </task>
     <task id="LOCAL-00002" summary="可以把UI显示到画面了">
       <option name="closed" value="true" />
@@ -570,8 +599,20 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>

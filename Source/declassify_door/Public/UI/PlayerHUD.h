@@ -11,7 +11,8 @@
 // 前向声明
 class UInventoryWidget;
 class UInventoryComponent;
-
+class UInteractPromptWidget;
+class UItemNameWidget;
 // 委托声明
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHoledSlotChanged, int32, SlotIndex);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnRemoveItem, int32, SlotIndex, bool, RemoveAll, bool, IsConsumed);
@@ -44,6 +45,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void RemoveItemFromInventory(int32 SlotIndex, bool RemoveAll, bool IsConsumed);
 
+	UFUNCTION(BlueprintCallable, Category = "Interaction")
+	void ShowInteractPrompt(const FText& PromptText);
+
+	// 隐藏交互提示
+	UFUNCTION(BlueprintCallable, Category = "Interaction")
+	void HideInteractPrompt();
+	
+	// 显示物品名称
+	UFUNCTION(BlueprintCallable, Category = "Item Name")
+	void ShowItemName(const FString& ItemName);
+    
+	// 立即显示新物品名称（取消之前的显示）
+	UFUNCTION(BlueprintCallable, Category = "Item Name")
+	void ShowNewItemNameImmediately(const FString& ItemName);
+
 protected:
 	// 背包UI类引用
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
@@ -60,4 +76,31 @@ protected:
 	// 获取玩家库存组件
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	UInventoryComponent* GetPlayerInventoryComponent() const;
+
+	// 交互提示UI类引用
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UInteractPromptWidget> InteractPromptWidgetClass;
+
+	// 交互提示UI实例
+	UPROPERTY()
+	UInteractPromptWidget* InteractPromptWidget;
+
+	// 物品名称UI类引用
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UItemNameWidget> ItemNameWidgetClass;
+
+	// 物品名称UI实例
+	UPROPERTY()
+	UItemNameWidget* ItemNameWidget;
+
+	// 定时器用于隐藏物品名称
+	FTimerHandle ItemNameTimerHandle;
+
+	// 隐藏物品名称
+	UFUNCTION()
+	void HideItemName();
+
+	// 检查是否正在显示物品名称
+	bool IsItemNameShowing() const;
+	
 };

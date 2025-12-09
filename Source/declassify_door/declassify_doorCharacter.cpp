@@ -47,6 +47,16 @@ void Adeclassify_doorCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("Character BeginPlay"));
+	if (InventoryComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InventoryComponent is valid"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("InventoryComponent is NULL!"));
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -70,16 +80,16 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 
 		EnhancedInputComponent->BindAction(MouseClickAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::HandleMouseClick);
 
-		PlayerInputComponent->BindAction("SwitchToStack1" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack1);
-		PlayerInputComponent->BindAction("SwitchToStack2" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack2);
-		PlayerInputComponent->BindAction("SwitchToStack3" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack3);
-		PlayerInputComponent->BindAction("SwitchToStack4" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack4);
-		PlayerInputComponent->BindAction("SwitchToStack5" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack5);
-		PlayerInputComponent->BindAction("SwitchToStack6" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack6);
-		PlayerInputComponent->BindAction("SwitchToStack7" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack7);
-		PlayerInputComponent->BindAction("SwitchToStack8" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack8);
-		PlayerInputComponent->BindAction("SwitchToStack9" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack9);
-		PlayerInputComponent->BindAction("SwitchToStack10" , IE_Pressed , this , &Adeclassify_doorCharacter::SwitchToStack10);
+		EnhancedInputComponent->BindAction(SwitchToStack1Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack1);
+		EnhancedInputComponent->BindAction(SwitchToStack2Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack2);
+		EnhancedInputComponent->BindAction(SwitchToStack3Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack3);
+		EnhancedInputComponent->BindAction(SwitchToStack4Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack4);
+		EnhancedInputComponent->BindAction(SwitchToStack5Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack5);
+		EnhancedInputComponent->BindAction(SwitchToStack6Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack6);
+		EnhancedInputComponent->BindAction(SwitchToStack7Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack7);
+		EnhancedInputComponent->BindAction(SwitchToStack8Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack8);
+		EnhancedInputComponent->BindAction(SwitchToStack9Action , ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack9);
+		EnhancedInputComponent->BindAction(SwitchToStack10Action, ETriggerEvent::Started , this , &Adeclassify_doorCharacter::SwitchToStack10);
 	}
 	else
 	{
@@ -243,6 +253,18 @@ void Adeclassify_doorCharacter::Look(const FInputActionValue& Value)
 
 void Adeclassify_doorCharacter::SwitchToStack1()
 {
+
+	UE_LOG(LogTemp, Warning, TEXT("SwitchToStack1 called"));
+	if(InventoryComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InventoryComponent valid, updating to slot 0"));
+		InventoryComponent->UpdateHeldSlot(0);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("InventoryComponent is NULL!"));
+	}
+	
 	if(InventoryComponent)
 	{
 		InventoryComponent->UpdateHeldSlot(0);

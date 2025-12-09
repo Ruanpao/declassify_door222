@@ -14,11 +14,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="ui uasset">
+    <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="UI Done">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/Component/InventoryComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/Component/InventoryComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Input/IMC_Default.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -514,7 +514,7 @@
       <workItem from="1765204898842" duration="22000" />
       <workItem from="1765204943111" duration="30000" />
       <workItem from="1765205006587" duration="752000" />
-      <workItem from="1765256399812" duration="9772000" />
+      <workItem from="1765256399812" duration="11843000" />
     </task>
     <task id="LOCAL-00001" summary="Add more UI code">
       <option name="closed" value="true" />
@@ -556,7 +556,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765264015337</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="UI Done">
+      <option name="closed" value="true" />
+      <created>1765277944690</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765277944690</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,7 +602,8 @@
     <MESSAGE value="created DT_Item and UI uasset" />
     <MESSAGE value="UI ans InventoryComponent already done" />
     <MESSAGE value="ui uasset" />
-    <option name="LAST_COMMIT_MESSAGE" value="ui uasset" />
+    <MESSAGE value="UI Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI Done" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -2,9 +2,10 @@
 
 
 #include "Component/InventoryComponent.h"
+
+#include "declassify_door/declassify_doorCharacter.h"
 #include "UI/PlayerHUD.h"
 #include "Kismet/GameplayStatics.h"
-#include "Layers/LayersSubsystem.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogInventory, All, All);
 
@@ -189,8 +190,23 @@ int32 UInventoryComponent::AnyEmptySlotAvailable() const
 
 void UInventoryComponent::CreateNewSlot(FName Item_ID, int32 Index)
 {
-	Slot[Index].ID = Item_ID;
-	Slot[Index].Quantity = 1;
+	// 从数据表中获取物品信息
+	if (FItemBasicInfo* FoundItemInfo = Datatable->FindRow<FItemBasicInfo>(Item_ID, TEXT("")))
+	{
+		Slot[Index].ID = Item_ID;
+		Slot[Index].Quantity = 1;
+		Slot[Index].Name = FoundItemInfo->Name.ToString(); // 从数据库读取名称
+		UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::CreateNewSlot - Created slot at index %d with item %s (Name: %s)"), 
+			Index, *Item_ID.ToString(), *Slot[Index].Name);
+	}
+	else
+	{
+		// 如果找不到物品信息，使用默认值
+		Slot[Index].ID = Item_ID;
+		Slot[Index].Quantity = 1;
+		Slot[Index].Name = TEXT("Unknown Item");
+		UE_LOG(LogTemp, Error, TEXT("UInventoryComponent::CreateNewSlot - Failed to find item info for ID: %s"), *Item_ID.ToString());
+	}
 }
 
 void UInventoryComponent::UpdateSlot()
@@ -203,6 +219,7 @@ void UInventoryComponent::UpdateSlot()
 		NewSlot.ID = "0000";
 		NewSlot.Quantity = 0;
 		NewSlot.Index = SlotIndex;
+		NewSlot.Name = "NoneItem"; // 设置默认名称
 		
 		Slot.Add(NewSlot);
 
@@ -281,6 +298,8 @@ void UInventoryComponent::DestroyAOldSlot(int32 Index)
 {
 	Slot[Index].ID = "0000";
 	Slot[Index].Quantity = 0;
+	Slot[Index].Name = "NoneItem"; // 重置名称
+
 }
 
 void UInventoryComponent::UpdateHeldSlot(int32 Index)
@@ -288,6 +307,63 @@ void UInventoryComponent::UpdateHeldSlot(int32 Index)
 	HeldItem = Slot[Index];
 	
 	HeldChanged.Broadcast(HeldItem);
+
+	// 显示物品名称
+	APlayerController* PlayerController = nullptr;
+	if (APawn* OwnerPawn = Cast<APawn>(GetOwner()))
+	{
+		PlayerController = Cast<APlayerController>(OwnerPawn->GetController());
+	}
+    
+	if (PlayerController)
+	{
+		APlayerHUD* HUD = Cast<APlayerHUD>(PlayerController->GetHUD());
+		if (HUD)
+		{
+			FString ItemName = HeldItem.Name;
+			if (!ItemName.IsEmpty())
+			{
+				HUD->ShowNewItemNameImmediately(ItemName);
+			}
+		}
+	}
+
+	Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(GetOwner());
+	if(MyCharacter)
+	{
+		if(HeldItem.ID==FName("2"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::Red);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("RED"));
+
+		}
+		else if(HeldItem.ID==FName("3"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::Green);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("GREEN"));
+
+		}
+		else if(HeldItem.ID==FName("4"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::Blue);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("BLUE"));
+		}
+		else if(HeldItem.ID==FName("5"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::White);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("WHITE"));
+		}
+		else
+		{
+			MyCharacter->bHasPaint=false;
+			UE_LOG(LogInventory , Warning , TEXT("bHasPaint=false"));
+
+		}
+	}
 
 	UE_LOG(LogInventory , Warning , TEXT("HeldItem Changed, ID : %s , Quantity : %d"), *HeldItem.ID.ToString(), HeldItem.Quantity);
 }

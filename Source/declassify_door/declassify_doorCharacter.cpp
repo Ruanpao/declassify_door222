@@ -13,6 +13,7 @@
 #include "Engine/LocalPlayer.h"
 #include "Actor/RotateDoor.h"
 #include "Kismet/GameplayStatics.h"
+#include "Actor/CompositeDoor.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -252,6 +253,22 @@ void Adeclassify_doorCharacter::PaintDoor()
 			{
 				Door->SetDoorColor(CurrentPaintColor);
 				return;  
+			}
+		}
+	}
+
+	TArray<AActor*> CompositeDoors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACompositeDoor::StaticClass(), CompositeDoors);
+	
+	for (AActor* DoorActor : CompositeDoors)
+	{
+		float Distance = FVector::Dist(GetActorLocation(), DoorActor->GetActorLocation());
+		if (Distance < 300.0f)
+		{
+			if (ACompositeDoor* Door = Cast<ACompositeDoor>(DoorActor))
+			{
+				Door->PaintWithColor(CurrentPaintColor);
+				return;
 			}
 		}
 	}

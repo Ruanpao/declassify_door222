@@ -31,7 +31,7 @@ void AMoving::BeginPlay()
 	Super::BeginPlay();
 
 	StartLocation = GetActorLocation();
-
+	StartRotation = GetActorRotation();
 	ForwardVector = GetActorForwardVector();
 	
 }
@@ -40,26 +40,55 @@ void AMoving::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(!bIsMoving)
+
+
+	if(bCanMove && bIsMoving)
 	{
-		return;
+		float MoveDelta = MoveSpeed * DeltaTime;
+	
+		FVector Movement = ForwardVector  * MoveDelta * MoveDirection;
+
+		FVector CurrentLocation = GetActorLocation();
+		FVector NewLocation = CurrentLocation + Movement;
+
+		CurrentSegmentDistance += MoveDelta;
+
+		SetActorLocation(NewLocation);
+
+		if(CurrentSegmentDistance >= MoveDistance)
+		{
+			MoveDirection *= -1;
+			CurrentSegmentDistance = 0.0f;
+		}
 	}
 
-	float MoveDelta = MoveSpeed * DeltaTime;
-	
-	FVector Movement = ForwardVector  * MoveDelta * MoveDirection;
-
-	FVector CurrentLocation = GetActorLocation();
-	FVector NewLocation = CurrentLocation + Movement;
-
-	CurrentSegmentDistance += MoveDelta;
-
-	SetActorLocation(NewLocation);
-
-	if(CurrentSegmentDistance >= MoveDistance)
+	if(bCanRotate && bIsRotating)
 	{
-		MoveDirection *= -1;
-		CurrentSegmentDistance = 0.0f;
+		// float RotateDelta = RotateSpeed * DeltaTime;
+		//
+		// float RemainingAngle = TargetRotationAngle - CurrentRotationAngle;
+		// float ActualRotateDelta = FMath::Min(RotateDelta, RemainingAngle);
+		//
+		// FRotator NewRotation = GetActorRotation();
+		// NewRotation.Yaw += ActualRotateDelta * RotateDirection;
+		//
+		// SetActorRotation(NewRotation);
+		//
+		// CurrentRotationAngle += ActualRotateDelta;
+		//
+		// if(CurrentRotationAngle >= TargetRotationAngle)
+		// {
+		// 	bIsRotating = false;
+		// 	CurrentRotationAngle = 0.0f;
+		// 	RotateDirection *= -1;
+		// }
+
+		float RotateDelta = RotateSpeed * DeltaTime * RotateDirection;
+		
+		FRotator NewRotation = GetActorRotation();
+		NewRotation.Yaw += RotateDelta;
+
+		SetActorRotation(NewRotation);
 	}
 }
 
@@ -76,7 +105,27 @@ void AMoving::StopMoving()
 void AMoving::ResetPosition()
 {
 	SetActorLocation(StartLocation);
+	SetActorRotation(StartRotation);
 	MoveDirection = 1;
 	CurrentSegmentDistance = 0.0f;
+	CurrentRotationAngle = 0.0f;
+	RotateDirection = 1;
+	bIsMoving = false;
+	bIsRotating = false;
+}
+
+void AMoving::StartRotating()
+{
+	if(bCanRotate)
+	{
+		bIsRotating = true;
+		CurrentRotationAngle = 0.0f;
+		RotateDirection = 1;
+	}
+}
+
+void AMoving::StopRotating()
+{
+	bIsRotating = false;
 }
 

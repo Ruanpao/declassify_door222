@@ -57,6 +57,7 @@ void ALeverActor::OnInteract_Implementation(AActor* Interactor)
 		if(LinkedMovingActor)
 		{
 			LinkedMovingActor->StartMoving();
+			LinkedMovingActor->StartRotating();
 		}
 	}
 	else
@@ -71,6 +72,7 @@ void ALeverActor::OnInteract_Implementation(AActor* Interactor)
 		if(LinkedMovingActor)
 		{
 			LinkedMovingActor->StopMoving();
+			LinkedMovingActor->StopRotating();
 		}
 	}
 	LeverMesh->SetRelativeRotation(NewRotation);

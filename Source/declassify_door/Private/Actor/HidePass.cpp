@@ -59,7 +59,7 @@ void AHidePass::CheckAndReveal(const FLinearColor& DoorColor)
 		FMath::Abs(DoorColor.R - RequiredColor.R) < ColorTolerance &&
 		FMath::Abs(DoorColor.G - RequiredColor.G) < ColorTolerance &&
 		FMath::Abs(DoorColor.B - RequiredColor.B) < ColorTolerance;
-
+	
 	if(bColorMatches)
 	{
 		SetWallVisible(true);

@@ -42,9 +42,28 @@ void APaintBucket::OnInteract_Implementation(AActor* Interactor)
 		if(Character->IsA(Adeclassify_doorCharacter::StaticClass()))
 		{
 			Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(Character);
-			if(MyCharacter)
+			// if(MyCharacter)
+			// {
+			// 	MyCharacter->PickupPaint(PaintColor);
+			// }
+			if(MyCharacter->InventoryComponent)
 			{
-				MyCharacter->PickupPaint(PaintColor);
+				if(PaintColor==FLinearColor::Red)
+				{
+					MyCharacter->InventoryComponent->AddToInventory(FName("2"),1);
+				}
+				else if(PaintColor==FLinearColor::Green)
+				{
+					MyCharacter->InventoryComponent->AddToInventory(FName("3"),1);
+				}
+				else if(PaintColor==FLinearColor::Blue)
+				{
+					MyCharacter->InventoryComponent->AddToInventory(FName("4"),1);
+				}
+				else if(PaintColor==FLinearColor::White)
+				{
+					MyCharacter->InventoryComponent->AddToInventory(FName("5"),1);
+				}
 			}
 		}
 		if(PickupSound)

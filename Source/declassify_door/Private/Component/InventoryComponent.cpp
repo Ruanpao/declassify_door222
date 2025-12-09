@@ -2,6 +2,8 @@
 
 
 #include "Component/InventoryComponent.h"
+
+#include "declassify_door/declassify_doorCharacter.h"
 #include "UI/PlayerHUD.h"
 #include "Kismet/GameplayStatics.h"
 #include "Layers/LayersSubsystem.h"
@@ -288,6 +290,43 @@ void UInventoryComponent::UpdateHeldSlot(int32 Index)
 	HeldItem = Slot[Index];
 	
 	HeldChanged.Broadcast(HeldItem);
+
+	Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(GetOwner());
+	if(MyCharacter)
+	{
+		if(HeldItem.ID==FName("2"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::Red);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("RED"));
+
+		}
+		else if(HeldItem.ID==FName("3"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::Green);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("GREEN"));
+
+		}
+		else if(HeldItem.ID==FName("4"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::Blue);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("BLUE"));
+		}
+		else if(HeldItem.ID==FName("5"))
+		{
+			MyCharacter->PickupPaint(FLinearColor::White);
+			MyCharacter->bHasPaint=true;
+			UE_LOG(LogInventory , Warning , TEXT("WHITE"));
+		}
+		else
+		{
+			MyCharacter->bHasPaint=false;
+			UE_LOG(LogInventory , Warning , TEXT("bHasPaint=false"));
+
+		}
+	}
 
 	UE_LOG(LogInventory , Warning , TEXT("HeldItem Changed, ID : %s , Quantity : %d"), *HeldItem.ID.ToString(), HeldItem.Quantity);
 }

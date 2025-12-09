@@ -46,6 +46,17 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Door")
 	bool bIsRotated = false;
 
+
+	//关联密码墙
+	UFUNCTION(BlueprintCallable,Category="Door|Pass")
+	void SetLinkedHidePass(class AHidePass* NewHidePass);
+
+	UFUNCTION(BlueprintCallable,Category="Door|Pass")
+	class AHidePass* GetLinkedHidePass() const{return LinkedHidePass;}
+	
+	UFUNCTION(BlueprintCallable,Category="Door|Pass")
+	void SetRequiredColor(const FLinearColor& Color) {	RequiredPaintColor = Color;	}
+
 private:
 	UPROPERTY(VisibleAnywhere,Category = "Door")
 	class UStaticMeshComponent* DoorMesh;
@@ -56,6 +67,16 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleport", meta = (AllowPrivateAccess = "true"))
 	FVector TeleportTargetLocation;
 
-
+	
 	bool bIsUpsideDown = false;
+
+	//关联密码墙
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Door|Pass",meta=(AllowPrivateAccess="true"))
+	class AHidePass* LinkedHidePass;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Door|Pass",meta=(AllowPrivateAccess="true"))
+	FLinearColor RequiredPaintColor = FLinearColor::Red;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Door|Pass",meta=(AllowPrivateAccess="true"))
+	bool bHasPaint = false;
 };

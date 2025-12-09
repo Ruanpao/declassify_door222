@@ -2,6 +2,8 @@
 
 
 #include "Actor/RotateDoor.h"
+
+#include "Actor/HidePass.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -115,6 +117,21 @@ void ARotateDoor::SetDoorColor(const FLinearColor& NewColor)
 	{
 		DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), NewColor);
 		UE_LOG(LogTemp, Log, TEXT("给门上色成功"));
+	}
+	
+	if (LinkedHidePass)
+	{
+		LinkedHidePass->CheckAndReveal(NewColor);
+	}
+}
+
+void ARotateDoor::SetLinkedHidePass(class AHidePass* NewHidePass)
+{
+	LinkedHidePass = NewHidePass;
+
+	if(LinkedHidePass)
+	{
+		LinkedHidePass->SetRequiredColor(RequiredPaintColor);
 	}
 }
 

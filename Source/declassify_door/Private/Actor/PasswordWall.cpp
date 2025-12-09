@@ -24,10 +24,16 @@ void APasswordWall::BeginPlay()
 	StartLocation = GetActorLocation();
 	TargetLocation = StartLocation + FVector(0,0,TargetHeight);
 	bShouldMove = false;
+
+	TArray<AActor*> FoundLocks;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AClickOnlyPasswordLock::StaticClass(), FoundLocks);
 	
-	if(TargetLock)
+	for (AActor* FoundLock : FoundLocks)
 	{
-		TargetLock->OnUnlocked.AddDynamic(this, &APasswordWall::OnPasswordLockUnlocked);
+		if (AClickOnlyPasswordLock* Lock = Cast<AClickOnlyPasswordLock>(FoundLock))
+		{
+			Lock->OnUnlocked.AddDynamic(this, &APasswordWall::OnPasswordLockUnlocked);
+		}
 	}
 }
 

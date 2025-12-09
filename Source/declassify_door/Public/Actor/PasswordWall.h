@@ -33,8 +33,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PasswordWall")
 	float TargetHeight = 500.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="PasswordWall")
-	AClickOnlyPasswordLock* TargetLock;
 
 private:
 	UPROPERTY(EditAnywhere, Category="PasswordWall")

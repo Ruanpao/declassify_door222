@@ -10,6 +10,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "Actor/RotateDoor.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -64,6 +66,8 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::Interact);
 
 		EnhancedInputComponent->BindAction(MouseClickAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::HandleMouseClick);
+
+		EnhancedInputComponent->BindAction(RotationAction, ETriggerEvent::Started, this, &Adeclassify_doorCharacter::RotateNearbyDoor);
 	}
 	else
 	{
@@ -178,6 +182,25 @@ void Adeclassify_doorCharacter::HandleMouseClick()
 				HitActor->ProcessEvent(ClickFunction, nullptr);
 			}
 			
+		}
+	}
+}
+
+void Adeclassify_doorCharacter::RotateNearbyDoor()
+{
+	TArray<AActor*> FoundDoors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ARotateDoor::StaticClass(), FoundDoors);
+	
+	for (AActor* DoorActor : FoundDoors)
+	{
+		float Distance = FVector::Dist(GetActorLocation(), DoorActor->GetActorLocation());
+		if (Distance < 500.0f)  
+		{
+			if (ARotateDoor* Door = Cast<ARotateDoor>(DoorActor))
+			{
+				Door->RotateDoor();
+				return;  
+			}
 		}
 	}
 }

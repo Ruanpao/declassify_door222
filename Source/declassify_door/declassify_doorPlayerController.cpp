@@ -29,12 +29,13 @@ void Adeclassify_doorPlayerController::InitializeHUD()
 	MyHUD = Cast<APlayerHUD>(GetHUD());
 
 	UE_LOG(LogTemp, Warning, TEXT("InitializeHUD called in PlayerController"));
-UE_LOG(LogTemp, Warning, TEXT("MyHUD is %s"), MyHUD ? TEXT("valid") : TEXT("null"));
+	UE_LOG(LogTemp, Warning, TEXT("MyHUD is %s"), MyHUD ? TEXT("valid") : TEXT("null"));
 	
 	MyPlayer = Cast<Adeclassify_doorCharacter>(GetPawn());
 
 	if(MyHUD && MyPlayer)
 	{
-		
+		// HUD和玩家都已初始化，背包UI会自动持续显示
+		UE_LOG(LogTemp, Warning, TEXT("HUD and Player initialized successfully"));
 	}
 }

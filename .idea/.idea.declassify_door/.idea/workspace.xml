@@ -14,18 +14,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="可以把UI显示到画面了">
+    <list default="true" id="1c77df81-a997-4282-8329-75297a112d5e" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventorySlotWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventorySlotWidget.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/Blueprints/BP_FirstPersonGameMode.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/UI/WBP_InventoryMainWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/UI/WBP_InventoryMainWidget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/DataTable/DT_Item.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/DataTable/DT_Item.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/FirstPerson/UI/WBP_PlayerHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/FirstPerson/UI/WBP_PlayerHUD.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/CoreTypes/ItemCoreType.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/CoreTypes/ItemCoreType.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/Component/InventoryComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/Component/InventoryComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/HeldItemWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/HeldItemWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InformationWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InformationWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InteractPopWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InteractPopWidget.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryCellWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryCellWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryMainWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/InventoryMainWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Private/UI/PlayerHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Private/UI/PlayerHUD.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryCellWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryCellWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryMainWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/InventoryMainWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/Public/UI/PlayerHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/Public/UI/PlayerHUD.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/declassify_door/declassify_doorPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/declassify_door/declassify_doorPlayerController.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +77,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -516,7 +521,11 @@
       <workItem from="1765177421207" duration="131000" />
       <workItem from="1765177628772" duration="1944000" />
       <workItem from="1765192309496" duration="1913000" />
-      <workItem from="1765194974968" duration="8927000" />
+      <workItem from="1765194974968" duration="9538000" />
+      <workItem from="1765204898842" duration="22000" />
+      <workItem from="1765204943111" duration="30000" />
+      <workItem from="1765205006587" duration="752000" />
+      <workItem from="1765256399812" duration="7335000" />
     </task>
     <task id="LOCAL-00001" summary="Add more UI code">
       <option name="closed" value="true" />
@@ -534,7 +543,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765199214817</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="created DT_Item and UI uasset">
+      <option name="closed" value="true" />
+      <created>1765204418147</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1765204418148</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -557,7 +574,12 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Add more UI code" />
     <MESSAGE value="可以把UI显示到画面了" />
-    <option name="LAST_COMMIT_MESSAGE" value="可以把UI显示到画面了" />
+    <MESSAGE value="created DT_Item and UI uasset" />
+    <option name="LAST_COMMIT_MESSAGE" value="created DT_Item and UI uasset" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

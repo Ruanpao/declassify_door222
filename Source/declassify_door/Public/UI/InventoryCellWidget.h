@@ -56,8 +56,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnButtonPressed();
 
-	UFUNCTION(BlueprintCallable)
-	void OnMouseButtonDown_Right();
 
 protected:
 	virtual void NativeOnInitialized() override;

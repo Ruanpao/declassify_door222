@@ -4,7 +4,7 @@
 #include "UI/PlayerHUD.h"
 
 #include "Engine/Canvas.h"
-#include "UI/InventoryMainWidget.h"
+#include "UI/InventoryWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "UI/DisposalPopWidget.h"
 
@@ -12,125 +12,115 @@
 #include "declassify_door/declassify_doorCharacter.h"
 #include "UI/InteractPopWidget.h"
 
-
-DEFINE_LOG_CATEGORY_STATIC(LogHUD, All, All);
-
-void APlayerHUD::DrawHUD()
+APlayerHUD::APlayerHUD()
 {
-    Super::DrawHUD();
-
-    DrawCrossHair();
-    //UE_LOG(LogTemp,Error,TEXT("%s Try AddUObject"), *GetName());
-    
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void APlayerHUD::BeginPlay()
 {
-    Super::BeginPlay();
-
-
+	Super::BeginPlay();
 	
-	
-    InventoryInformationWidget = CreateWidget<UUserWidget>(GetWorld(), InventoryInformationWidgetClass);
-
-    InventoryMainWidget = CreateWidget<UUserWidget>(GetWorld(), InventoryMainWidgetClass);
-	
-
-    if(InventoryInformationWidget)
+	// 初始化UI
+	InitializeUI();
+}void APlayerHUD::InitializeUI()
+{
+    // 确保我们有有效的玩家控制器
+    if (!GetOwningPlayerController())
     {
-    	InventoryInformationWidget->SetVisibility(ESlateVisibility::Hidden);
-        InventoryInformationWidget->AddToViewport();
+        UE_LOG(LogTemp, Error, TEXT("PlayerHUD: No owning player controller!"));
+        return;
     }
-	
-    
-    if(InventoryMainWidget)
-    {
-        InventoryMainWidget->AddToViewport();
 
-        if (UInventoryMainWidget* InventoryMainWidgetInstance = Cast<UInventoryMainWidget>(InventoryMainWidget))
+    UE_LOG(LogTemp, Warning, TEXT("=== PlayerHUD InitializeUI Start ==="));
+
+    // 创建背包UI
+    if (InventoryWidgetClass)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("InventoryWidgetClass is valid"));
+        
+        InventoryWidget = CreateWidget<UInventoryWidget>(GetOwningPlayerController(), InventoryWidgetClass);
+        if (InventoryWidget)
         {
-            InventoryMainWidgetInstance->Received_2.AddUObject(this, &APlayerHUD::ReceivedInfo);
+            UE_LOG(LogTemp, Warning, TEXT("InventoryWidget created successfully"));
             
-            InventoryMainWidgetInstance->ReceivedRemove.AddUObject(this, &APlayerHUD::RemoveRequest);
+            // 设置UI属性确保可见
+            InventoryWidget->SetVisibility(ESlateVisibility::Visible);
+            InventoryWidget->SetIsEnabled(true);
+            
+            // 获取玩家库存组件并初始化UI
+            UInventoryComponent* InventoryComp = GetPlayerInventoryComponent();
+            if (InventoryComp)
+            {
+                UE_LOG(LogTemp, Warning, TEXT("InventoryComponent found, initializing inventory..."));
+                InventoryWidget->InitializeInventory(InventoryComp);
+                
+                // 直接添加到视口，保持持续显示
+                InventoryWidget->AddToViewport();
+                
+                
+                UE_LOG(LogTemp, Warning, TEXT("InventoryWidget added to viewport with ZOrder 100"));
+                
+                // 检查UI是否真的在视口中
+                if (InventoryWidget->IsInViewport())
+                {
+                    UE_LOG(LogTemp, Warning, TEXT("InventoryWidget is confirmed to be in viewport"));
+                }
+                else
+                {
+                    UE_LOG(LogTemp, Error, TEXT("InventoryWidget is NOT in viewport!"));
+                }
+            }
+            else
+            {
+                UE_LOG(LogTemp, Error, TEXT("PlayerHUD: Failed to get player inventory component"));
+            }
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("PlayerHUD: Failed to create inventory widget"));
         }
     }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("PlayerHUD: InventoryWidgetClass is not set"));
+    }
+    
+    UE_LOG(LogTemp, Warning, TEXT("=== PlayerHUD InitializeUI End ==="));
 }
 
-void APlayerHUD::ReceivedInfo(int32 Index)
+void APlayerHUD::UpdateHeldSlot(int32 SlotIndex)
 {
-	OnHoledSlotChanged.Broadcast(Index);
+	// 广播委托，通知库存组件更新手持物品
+	OnHoledSlotChanged.Broadcast(SlotIndex);
+	UE_LOG(LogTemp, Log, TEXT("PlayerHUD: Updated held slot to index %d"), SlotIndex);
 }
 
-
-void APlayerHUD::InventoryInformationVisibility()
+void APlayerHUD::RemoveItemFromInventory(int32 SlotIndex, bool RemoveAll, bool IsConsumed)
 {
-	if (InventoryInformationWidget)
+	// 广播委托，通知库存组件移除物品
+	RemoveItem.Broadcast(SlotIndex, RemoveAll, IsConsumed);
+	UE_LOG(LogTemp, Log, TEXT("PlayerHUD: Requested removal of item from slot %d (RemoveAll: %s, Consumed: %s)"), 
+		SlotIndex, RemoveAll ? TEXT("True") : TEXT("False"), IsConsumed ? TEXT("True") : TEXT("False"));
+}
+
+UInventoryComponent* APlayerHUD::GetPlayerInventoryComponent() const
+{
+	APawn* PlayerPawn = GetOwningPawn();
+	if (!PlayerPawn)
 	{
-		if(InventoryInformationWidget->IsVisible())
-		{
-			InventoryInformationWidget->SetVisibility(ESlateVisibility::Hidden);
-			UpdateMouseSituation(-1);
-		}
-		else
-		{
-			InventoryInformationWidget->SetVisibility(ESlateVisibility::Visible);
-			UpdateMouseSituation(1);
-		}
+		UE_LOG(LogTemp, Error, TEXT("PlayerHUD: No owning pawn"));
+		return nullptr;
 	}
-}
 
-void APlayerHUD::RemoveRequest(int32 Index)
-{
-	RemoveIndex =  Index;
-/*
-	DisposalPopWidget = CreateWidget<UUserWidget>(GetWorld(), DisposalPopWidgetClass);
-
-	if(DisposalPopWidget)
+	// 从玩家Pawn获取InventoryComponent
+	UInventoryComponent* InventoryComp = PlayerPawn->FindComponentByClass<UInventoryComponent>();
+	if (!InventoryComp)
 	{
-		DisposalPopWidget->AddToViewport();
-
-		if(UDisposalPopWidget* DisposalPopWidgetInstance = Cast<UDisposalPopWidget>(DisposalPopWidget))
-		{
-			DisposalPopWidgetInstance->Remove_2.AddUObject(this, &APlayerHUD::RemoveRequest_2);
-		}
+		UE_LOG(LogTemp, Error, TEXT("PlayerHUD: No InventoryComponent found on player pawn"));
+		return nullptr;
 	}
-	*/
-	
+
+	return InventoryComp;
 }
-
-void APlayerHUD::RemoveRequest_2(bool RemoveAll)
-{
-	RemoveItem.Broadcast(RemoveIndex , RemoveAll , false);
-
-	UE_LOG(LogHUD , Warning , TEXT("RemoveIndex : %d , RemoveAll : %s"), RemoveIndex, RemoveAll ? TEXT("true") : TEXT("false"));
-}
-
-void APlayerHUD::DrawCrossHair()
-{
-	const TInterval<float> Center(Canvas->SizeX* 0.5f, Canvas->SizeY * 0.5f);
-
-	const float HalfLineSize = 10.0f;
-	const float LineThickness = 2.0f;
-	const FLinearColor LineColor = FLinearColor::Green;
-
-	DrawLine(Center.Min - HalfLineSize, Center.Max , Center.Min + HalfLineSize,Center.Max, LineColor,LineThickness);
-	DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor,LineThickness);
-}
-
-void APlayerHUD::UpdateMouseSituation(int32 Num)
-{
-	CurrentVisibleNum += Num;
-
-	UE_LOG(LogHUD ,  Error , TEXT("%d") , CurrentVisibleNum);
-	
-	if(CurrentVisibleNum > 0)
-	{
-		OnMouseSituationChanged.Broadcast(true);
-	}
-	else
-	{
-		OnMouseSituationChanged.Broadcast(false);
-	}
-}
-
 

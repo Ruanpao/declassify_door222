@@ -44,10 +44,6 @@ void UInventoryCellWidget::OnButtonPressed()
 	}
 }
 
-void UInventoryCellWidget::OnMouseButtonDown_Right()
-{
-}
-
 void UInventoryCellWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();

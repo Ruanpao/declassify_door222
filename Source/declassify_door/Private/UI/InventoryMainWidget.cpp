@@ -61,33 +61,29 @@ void UInventoryMainWidget::NativePreConstruct()
             {
                 if (UInventoryComponent* InventoryComponent = PlayerPawn->FindComponentByClass<UInventoryComponent>())
                 {
-                    // 仅在未绑定时执行绑定
-                    if (!bIsDelegateBound)
+                    // 创建所有10个格子，包括空的
+                    for (int32 i = 0; i < 10; i++) // 假设有10个槽位
                     {
-                        InventoryComponent->OnInventoryUpdate.AddUObject(this, &UInventoryMainWidget::UpdateMainWidget);
-                        bIsDelegateBound = true;
-                        UE_LOG(LogMainWidget, Log, TEXT("Delegate bound successfully"));
-                    }
-                    else
-                    {
-                        UE_LOG(LogMainWidget, Log, TEXT("Delegate already bound, skipping"));
-                    }
-                    
-                    int32 Index = 0;
-                    for (auto& Item : InventoryComponent->Slot)
-                    {
-                        UE_LOG(LogTemp, Warning, TEXT("Nakamura01 ID: %s , Quantity: %d , Index: %d, Name:%s"), 
-                               *Item.ID.ToString(), Item.Quantity, Index, *GetName());
-                        
                         if (UInventoryCellWidget* InventoryCellWidget = 
                             CreateWidget<UInventoryCellWidget>(GetWorld(), InventoryCellWidgetClass))
                         {
-                            InventoryCellWidget->UpdateInventoryCellWidget(Item.ID, Item.Quantity, Index);
+                            // 获取该槽位的物品数据
+                            FItemInInventory ItemData;
+                            if (i < InventoryComponent->Slot.Num())
+                            {
+                                ItemData = InventoryComponent->Slot[i];
+                            }
+                            else
+                            {
+                                ItemData.ID = FName("0000");
+                                ItemData.Quantity = 0;
+                            }
+                            
+                            InventoryCellWidget->UpdateInventoryCellWidget(ItemData.ID, ItemData.Quantity, i);
                             InventoryCellWidget->Received_1.AddUObject(this, &UInventoryMainWidget::ReceivedInfo);
                             InventoryCellWidget->BrushWhite.AddUObject(this, &UInventoryMainWidget::BrushWhite);
                             InventoryCellWidget->Remove.AddUObject(this, &UInventoryMainWidget::ReceivedRemoveInfo);
                             Grid->AddChildToWrapBox(InventoryCellWidget);
-                            Index += 1;
                         }
                     }
                     break;
@@ -107,5 +103,7 @@ void UInventoryMainWidget::UpdateMainWidget()
 {
     UE_LOG(LogMainWidget, Log, TEXT("Updating main widget"));
     Grid->ClearChildren();
+
+    
     NativePreConstruct(); // 保留原有逻辑，但委托不会重复绑定
 }

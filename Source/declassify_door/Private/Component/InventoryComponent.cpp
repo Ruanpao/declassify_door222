@@ -36,7 +36,7 @@ void UInventoryComponent::BeginPlay()
     UpdateSlot();
     
     // 设置初始手持物品为第一个槽位
-    HeldItem = Slot[5];
+    //HeldItem = Slot[5];
     UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Initial HeldItem: ID=%s, Quantity=%d, Index=%d"), 
         *HeldItem.ID.ToString(), HeldItem.Quantity, HeldItem.Index);
     
@@ -300,10 +300,21 @@ void UInventoryComponent::DestroyAOldSlot(int32 Index)
 	Slot[Index].Quantity = 0;
 	Slot[Index].Name = "NoneItem"; // 重置名称
 
+	OnInventoryUpdate.Broadcast();
 }
 
 void UInventoryComponent::UpdateHeldSlot(int32 Index)
 {
+	if(Slot.Num() == 0 || !Slot.IsValidIndex(Index))
+	{
+		// 如果数组为空或索引无效，清空手持物品
+		HeldItem.ID = FName("0000");
+		HeldItem.Quantity = 0;
+		HeldItem.Name = TEXT("NoneItem");
+		HeldChanged.Broadcast(HeldItem);
+		return;
+	}
+	
 	HeldItem = Slot[Index];
 	
 	HeldChanged.Broadcast(HeldItem);
@@ -363,6 +374,65 @@ void UInventoryComponent::UpdateHeldSlot(int32 Index)
 			UE_LOG(LogInventory , Warning , TEXT("bHasPaint=false"));
 
 		}
+
+		if(HeldItem.ID == FName("7"))
+		{
+			if(MyCharacter->CurrentAllStonePlate.Num() > 0)
+			{
+				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[0];
+				MyCharacter->bHasStonePlate = true;
+			}
+			else
+			{
+				MyCharacter->CurrentStonePlate = nullptr;
+				MyCharacter->bHasStonePlate = false;
+			}
+		}
+		else if(HeldItem.ID == FName("8"))
+		{
+			if(MyCharacter->CurrentAllStonePlate.Num() > 1)
+			{
+				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[1];
+				MyCharacter->bHasStonePlate = true;
+			}
+			else
+			{
+				MyCharacter->CurrentStonePlate = nullptr;
+				MyCharacter->bHasStonePlate = false;
+			}
+		}
+		else if(HeldItem.ID == FName("9"))
+		{
+			if(MyCharacter->CurrentAllStonePlate.Num() > 2)
+			{
+				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[2];
+				MyCharacter->bHasStonePlate = true;
+			}
+			else
+			{
+				MyCharacter->CurrentStonePlate = nullptr;
+				MyCharacter->bHasStonePlate = false;
+			}
+		}
+		else if(HeldItem.ID == FName("10"))
+		{
+			if(MyCharacter->CurrentAllStonePlate.Num() > 3)
+			{
+				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[3];
+				MyCharacter->bHasStonePlate = true;
+			}
+			else
+			{
+				MyCharacter->CurrentStonePlate = nullptr;
+				MyCharacter->bHasStonePlate = false;
+			}
+		}
+		else
+		{
+			MyCharacter->CurrentStonePlate = nullptr;
+			MyCharacter->bHasStonePlate = false;
+		}
+		
 	}
 
 	UE_LOG(LogInventory , Warning , TEXT("HeldItem Changed, ID : %s , Quantity : %d"), *HeldItem.ID.ToString(), HeldItem.Quantity);

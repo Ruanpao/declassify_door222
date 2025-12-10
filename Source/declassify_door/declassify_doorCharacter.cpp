@@ -14,6 +14,7 @@
 #include "Actor/RotateDoor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Actor/CompositeDoor.h"
+#include "Actor/StonePlate.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -271,6 +272,26 @@ void Adeclassify_doorCharacter::PaintDoor()
 				return;
 			}
 		}
+	}
+}
+
+void Adeclassify_doorCharacter::PickupStonePlate(AStonePlate* NewStonePlate)
+{
+	if(NewStonePlate->GetPlateColor() == FLinearColor::Red)
+	{
+		CurrentAllStonePlate.Insert(NewStonePlate,0);
+	}
+	else if(NewStonePlate->GetPlateColor() == FLinearColor::Green)
+	{
+		CurrentAllStonePlate.Insert(NewStonePlate,1);
+	}
+	else if(NewStonePlate->GetPlateColor() == FLinearColor::Blue)
+	{
+		CurrentAllStonePlate.Insert(NewStonePlate,2);
+	}
+	else if(NewStonePlate->GetPlateColor() == FLinearColor::White)
+	{
+		CurrentAllStonePlate.Insert(NewStonePlate,3);
 	}
 }
 

@@ -107,7 +107,8 @@ void APillar::UpdateLowering()
 void APillar::UpdateAnsNumber(int32 Number)
 {
 	AnsNumber +=Number;
-
+	UE_LOG(LogTemp, Warning, TEXT("AnsNumber: %d, Target Ans: %d"), AnsNumber, Ans);
+	
 	if(Ans == AnsNumber)
 	{
 		bIsNumber = true;

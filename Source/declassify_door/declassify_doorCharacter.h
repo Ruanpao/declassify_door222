@@ -17,6 +17,7 @@ class UCameraComponent;
 class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
+class AStonePlate;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 DECLARE_DELEGATE(FSwitchToStack1);
@@ -153,7 +154,23 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category="Paint")
 	bool bHasPaint = false;
 
+	//当前携带的石板类
+	UPROPERTY(BlueprintReadOnly, Category="StonePlate")
+	AStonePlate * CurrentStonePlate;
+
+	//所有携带的石板
+	UPROPERTY(BlueprintReadOnly, Category="StonePlate")
+	TArray<AStonePlate*> CurrentAllStonePlate;
+
+	//是否携带石板
+	UPROPERTY(BlueprintReadOnly, Category="StonePlate")
+	bool bHasStonePlate = false;
+
+	UFUNCTION(BlueprintCallable, Category = "StonePlate")
+	void PickupStonePlate(AStonePlate* NewStonePlate);
+
 	UFUNCTION(BlueprintCallable,Category = "Paint")
 	void PickupPaint(const FLinearColor& NewColor);
+	
 };
 

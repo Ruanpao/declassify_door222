@@ -43,6 +43,8 @@ void AStonePlate::OnInteract_Implementation(AActor* Interactor)
 			Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(Character);
 			if(MyCharacter->InventoryComponent)
 			{
+				MyCharacter->PickupStonePlate(this);
+				
 				if(PlateColor==FLinearColor::Red)
 				{
 					MyCharacter->InventoryComponent->AddToInventory(FName("7"),1);
@@ -60,7 +62,6 @@ void AStonePlate::OnInteract_Implementation(AActor* Interactor)
 					MyCharacter->InventoryComponent->AddToInventory(FName("10"),1);
 				}
 				
-				MyCharacter->PickupStonePlate(this);
 			}
 			
 			if(PickupSound)

@@ -299,7 +299,7 @@ void UInventoryComponent::DestroyAOldSlot(int32 Index)
 	Slot[Index].ID = "0";
 	Slot[Index].Quantity = 0;
 	Slot[Index].Name = "NoneItem"; // 重置名称
-
+	
 	OnInventoryUpdate.Broadcast();
 }
 

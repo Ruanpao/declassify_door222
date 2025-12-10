@@ -49,7 +49,8 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
 	if( CurrentPlate)
 	{
 		Player->PickupStonePlate(CurrentPlate);
-		CurrentPlate->Destroy();
+		CurrentPlate->OnInteract_Implementation(Interactor);
+		OnPlateNumber.Broadcast(-AnsNumber);
 		CurrentPlate = nullptr;
 	}
 	//放置
@@ -64,15 +65,16 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
 		{
 			NewPlate->SetPlateColor(Player->CurrentStonePlate->GetPlateColor());
 			CurrentPlate = NewPlate;
+			
 
 			Player->bHasStonePlate = false;
 			Player->CurrentStonePlate = nullptr;
-
+			
 			OnPlateNumber.Broadcast(AnsNumber);
 			OnPlatePlaced.Broadcast(NewPlate->GetPlateColor());
 			
-			
 			Player->InventoryComponent->DestroyAOldSlot(Player->InventoryComponent->HeldItem.Index);
+			Player->InventoryComponent->UpdateHeldSlot(0);
 		}
 	}
 }

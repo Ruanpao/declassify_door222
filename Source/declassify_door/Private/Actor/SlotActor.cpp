@@ -68,8 +68,9 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
 			Player->bHasStonePlate = false;
 			Player->CurrentStonePlate = nullptr;
 
-			OnPlatePlaced.Broadcast(NewPlate->GetPlateColor());
 			OnPlateNumber.Broadcast(AnsNumber);
+			OnPlatePlaced.Broadcast(NewPlate->GetPlateColor());
+			
 			
 			Player->InventoryComponent->DestroyAOldSlot(Player->InventoryComponent->HeldItem.Index);
 		}

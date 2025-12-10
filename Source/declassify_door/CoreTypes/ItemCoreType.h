@@ -45,4 +45,7 @@ struct FItemInInventory
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotInfo")
 	int32 Quantity = 0;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotInfo")
+	FString Name = "NoneItem";
 };

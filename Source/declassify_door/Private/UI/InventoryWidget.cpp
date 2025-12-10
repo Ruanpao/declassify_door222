@@ -10,7 +10,6 @@ void UInventoryWidget::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    Super::NativeConstruct();
 
     SetVisibility(ESlateVisibility::Visible);
     UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::NativeConstruct called"));
@@ -160,6 +159,7 @@ void UInventoryWidget::OnHeldItemChanged(FItemInInventory HeldItem)
     UE_LOG(LogTemp, Warning, TEXT("UInventoryWidget::OnHeldItemChanged - HeldItem Index: %d, ID: %s"), 
         HeldItem.Index, *HeldItem.ID.ToString());
     SelectSlot(HeldItem.Index);
+    
 }
 
 void UInventoryWidget::RefreshInventory()

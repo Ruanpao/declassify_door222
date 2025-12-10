@@ -41,7 +41,7 @@ struct FItemInInventory
 	int32 Index = -1;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotInfo")
-	FName ID = "0000";
+	FName ID = "0";
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotInfo")
 	int32 Quantity = 0;

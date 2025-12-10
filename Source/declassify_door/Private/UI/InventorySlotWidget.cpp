@@ -10,12 +10,13 @@ void UInventorySlotWidget::SetSlotData(const FItemInInventory& ItemData)
 {
 	if (!ItemDataTable) return;
 
-	// 如果是空槽位 (ID为"0000")
-	if (ItemData.ID == FName("0000"))
+	// 如果是空槽位 (ID为"0")
+	if (ItemData.ID == FName("0"))
 	{
 		if (ItemIcon)
 		{
-			ItemIcon->SetVisibility(ESlateVisibility::Visible);
+			ItemIcon->SetVisibility(ESlateVisibility::Hidden);
+			
 		}
 		return;
 	}

@@ -179,7 +179,7 @@ int32 UInventoryComponent::AnyEmptySlotAvailable() const
 {
 	for (int32 index = 0 ; index < SlotSize ; index++)
 	{
-		if (Slot[index].Quantity == 0 || Slot[index].ID == FName("0000"))
+		if (Slot[index].Quantity == 0 || Slot[index].ID == FName("0"))
 		{
 			return index;
 		}
@@ -216,7 +216,7 @@ void UInventoryComponent::UpdateSlot()
 	while(Slot.Num() < SlotSize)
 	{
 		FItemInInventory NewSlot;
-		NewSlot.ID = "0000";
+		NewSlot.ID = "0";
 		NewSlot.Quantity = 0;
 		NewSlot.Index = SlotIndex;
 		NewSlot.Name = "NoneItem"; // 设置默认名称
@@ -296,7 +296,7 @@ void UInventoryComponent::RemoveOne(int32 Index, int32 Quantity)
 
 void UInventoryComponent::DestroyAOldSlot(int32 Index)
 {
-	Slot[Index].ID = "0000";
+	Slot[Index].ID = "0";
 	Slot[Index].Quantity = 0;
 	Slot[Index].Name = "NoneItem"; // 重置名称
 
@@ -308,7 +308,7 @@ void UInventoryComponent::UpdateHeldSlot(int32 Index)
 	if(Slot.Num() == 0 || !Slot.IsValidIndex(Index))
 	{
 		// 如果数组为空或索引无效，清空手持物品
-		HeldItem.ID = FName("0000");
+		HeldItem.ID = FName("0");
 		HeldItem.Quantity = 0;
 		HeldItem.Name = TEXT("NoneItem");
 		HeldChanged.Broadcast(HeldItem);

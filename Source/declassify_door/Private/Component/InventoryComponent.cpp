@@ -36,7 +36,6 @@ void UInventoryComponent::BeginPlay()
     UpdateSlot();
     
     // 设置初始手持物品为第一个槽位
-    //HeldItem = Slot[5];
     UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Initial HeldItem: ID=%s, Quantity=%d, Index=%d"), 
         *HeldItem.ID.ToString(), HeldItem.Quantity, HeldItem.Index);
     
@@ -72,12 +71,6 @@ void UInventoryComponent::BeginPlay()
     {
         UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Owner is not player or has no player tag"));
     }
-    
-    // 测试：添加一个物品到库存
-    UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Adding test item ID '4' to inventory"));
-    AddToInventory(FName("4"), 1);
-	AddToInventory(FName("3"), 1);
-
 
     // 打印所有槽位信息
     UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent::BeginPlay - Current inventory slots:"));

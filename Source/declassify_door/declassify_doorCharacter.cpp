@@ -124,9 +124,7 @@ AActor* Adeclassify_doorCharacter::SphereTraceForInteractable()
 		Sphere,
 		QueryParams
 	);
-
-	DrawDebugSphere(GetWorld(), StartLocation, InteractRadius, 12, FColor::Green, false, 2.0f);
-    
+	
 	if (bHit)
 	{
 		for (const FHitResult& HitResult : HitResults)
@@ -135,7 +133,6 @@ AActor* Adeclassify_doorCharacter::SphereTraceForInteractable()
             
 			if (HitActor && HitActor->Implements<UInteractInterface>())
 			{
-				DrawDebugPoint(GetWorld(), HitActor->GetActorLocation(), 20.0f, FColor::Red, false, 2.0f);
                 
 				UE_LOG(LogTemp, Log, TEXT("检测到可交互对象: %s"), *HitActor->GetName());
 				return HitActor;
@@ -171,26 +168,6 @@ void Adeclassify_doorCharacter::HandleMouseClick()
 
 	FVector Start = WorldLocation;
 	FVector End = Start + (WorldDirection * InteractRadius);
-	
-	DrawDebugLine(
-		GetWorld(),
-		Start,
-		End,
-		FColor::Green,
-		false,  
-		0.5f,   
-		0,      
-		2.0f    
-	);
-	
-	DrawDebugPoint(
-		GetWorld(),
-		Start,
-		10.0f,
-		FColor::Blue,
-		false,
-		0.5f
-	);
 	
 	//射线检测
 	FHitResult HitResult;

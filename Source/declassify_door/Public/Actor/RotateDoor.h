@@ -44,6 +44,9 @@ public:
 	float TeleportDistance = 200.0f;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Door")
+	float TeleportDown = 4700.0f;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Door")
 	bool bIsRotated = false;
 
 

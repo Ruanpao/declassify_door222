@@ -81,7 +81,7 @@ void ARotateDoor::OnInteract_Implementation(AActor* Interactor)
 		{
 			if (bIsUpsideDown)
 			{
-				TeleportLocation.Z -= 4700.0f;  
+				TeleportLocation.Z -= TeleportDown;  
 			}
 			else
 			{

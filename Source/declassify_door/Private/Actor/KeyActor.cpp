@@ -2,6 +2,9 @@
 
 
 #include "Actor/KeyActor.h"
+
+#include "declassify_door/declassify_doorCharacter.h"
+#include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -32,7 +35,24 @@ void AKeyActor::Tick(float DeltaTime)
 
 void AKeyActor::OnInteract_Implementation(AActor* Interactor)
 {
+	if(!Interactor)
+	{
+		return;
+	}
 
+	if(ACharacter * Character = Cast<ACharacter>(Interactor))
+	{
+		if(Character->IsA(Adeclassify_doorCharacter::StaticClass()))
+		{
+			Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(Character);
+			if(MyCharacter->InventoryComponent)
+			{
+				MyCharacter->InventoryComponent->AddToInventory(FName("1"),1);
+			}
+		}
+	}
+	
+	
 	if (OnKeyPickedUp.IsBound())
 	{
 		OnKeyPickedUp.Broadcast();

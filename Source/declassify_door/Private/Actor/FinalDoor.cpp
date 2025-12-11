@@ -15,9 +15,6 @@ AFinalDoor::AFinalDoor()
 
     DoorMesh->SetVisibility(false);
     
-    DoorMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-    DoorMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
-    DoorMesh->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 }
 
 void AFinalDoor::BeginPlay()
@@ -50,7 +47,7 @@ void AFinalDoor::AddKey()
     {
         DoorMesh->SetVisibility(true);
         // 启用碰撞，允许交互
-        DoorMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+        //DoorMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
         
         if(DoorCreateSound)
         {
@@ -65,6 +62,11 @@ void AFinalDoor::OnInteract_Implementation(AActor* Interactor)
     if (DoorMesh->IsVisible())
     {
         UE_LOG(LogTemp, Warning, TEXT("FinalDoor interacted - Returning to main menu"));
+
+        if(InteractSound)
+        {
+            UGameplayStatics::PlaySoundAtLocation(this, InteractSound, GetActorLocation());
+        }
         
         // 回到主菜单
         ReturnToMainMenu();

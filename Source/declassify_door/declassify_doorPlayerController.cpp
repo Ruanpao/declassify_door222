@@ -50,7 +50,7 @@ void Adeclassify_doorPlayerController::SetupInputComponent()
     // 绑定ESC键到暂停功能
     if (InputComponent)
     {
-        InputComponent->BindKey(EKeys::BackSpace, IE_Pressed, this, &Adeclassify_doorPlayerController::TogglePauseMenu);
+        InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &Adeclassify_doorPlayerController::TogglePauseMenu);
     }
 }
 

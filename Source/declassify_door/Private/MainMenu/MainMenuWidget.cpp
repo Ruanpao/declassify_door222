@@ -52,7 +52,7 @@ void UMainMenuWidget::OnStartGameClicked()
     UE_LOG(LogTemp, Warning, TEXT("Start Game button clicked"));
     
 
-    UGameplayStatics::OpenLevel(GetWorld(), "FirstMap"); // 替换为你的游戏地图
+    UGameplayStatics::OpenLevel(GetWorld(), "PlayGame"); // 替换为你的游戏地图
 }
 
 void UMainMenuWidget::OnQuitGameClicked()

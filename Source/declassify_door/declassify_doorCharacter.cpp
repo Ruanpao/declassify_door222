@@ -16,7 +16,7 @@
 #include "Actor/CompositeDoor.h"
 #include "Actor/StonePlate.h"
 
-//DEFINE_LOG_CATEGORY(LogTemplateCharacter);
+DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // Adeclassify_doorCharacter

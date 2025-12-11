@@ -82,10 +82,14 @@ void APillar::ReceivePlateColor(FLinearColor Color)
 
 void APillar::StartLowering()
 {
+	if(PillarLowerSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this,PillarLowerSound,GetActorLocation(),1.0f,1.0f,1.0f);
+	}
 	bLowering = true;
 	LowerProgress = 0.0f;
 
-	GetWorld()->GetTimerManager().SetTimer(LowerTimer,this,&APillar::UpdateLowering,0.02f,true);
+	GetWorld()->GetTimerManager().SetTimer(LowerTimer,this,&APillar::UpdateLowering,0.04f,true);
 }
 
 void APillar::UpdateLowering()

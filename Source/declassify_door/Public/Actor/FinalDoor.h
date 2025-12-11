@@ -21,6 +21,8 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void AddKey();
 private:
 	UPROPERTY(EditAnywhere,Category = "FinalDoor")
 	class UStaticMeshComponent* DoorMesh;

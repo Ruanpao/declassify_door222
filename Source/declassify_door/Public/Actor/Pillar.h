@@ -64,4 +64,7 @@ private:
 	int32 AnsNumber = 0;	
 
 	bool bIsNumber = false;
+
+	UPROPERTY(EditAnywhere,Category="Pillar")
+	class USoundBase* PillarLowerSound;
 };

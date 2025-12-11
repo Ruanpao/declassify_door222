@@ -5,6 +5,7 @@
 
 #include "Components/TextRenderComponent.h"
 #include "declassify_door/declassify_doorCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ASlotActor::ASlotActor()
@@ -75,6 +76,10 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
 			
 			Player->InventoryComponent->DestroyAOldSlot(Player->InventoryComponent->HeldItem.Index);
 			Player->InventoryComponent->UpdateHeldSlot(0);
+		}
+		if(PutSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this,PutSound,GetActorLocation());
 		}
 	}
 }

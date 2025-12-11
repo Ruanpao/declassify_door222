@@ -50,4 +50,7 @@ private:
 	
 	UPROPERTY(EditAnywhere,Category = "SlotStone")
 	int32 AnsNumber =0 ;
+
+	UPROPERTY(EditAnywhere,Category = "SlotStone")
+	class USoundBase * PutSound;
 };

@@ -50,7 +50,7 @@ void ARotateDoor::RotateDoor()
 	FVector DoorDown = -DoorUp;
 	
 	FVector CurrentLocation = DoorMesh->GetRelativeLocation();
-	CurrentLocation += DoorDown * 340.0f; 
+	CurrentLocation += DoorDown * 260.0f; 
 	
 	DoorMesh->SetRelativeLocation(CurrentLocation);
 	

@@ -1,0 +1,34 @@
+﻿<changelist name="在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]" date="1765460834552" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/shelved.patch" />
+  <option name="DESCRIPTION" value="在进行更新之前于 2025/12/11 21:47 取消提交了更改 [更改]" />
+  <binary>
+    <option name="BEFORE_PATH" value="Content/Map/FirstMap.umap" />
+    <option name="AFTER_PATH" value="Content/Map/FirstMap.umap" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/FirstMap.umap" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/BP_PasswordWall.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/BP_PasswordWall.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/BP_PasswordWall.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/Door/BP_RotateDoor_Down.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/Door/BP_RotateDoor_Down.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/BP_RotateDoor_Down.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/Door/BP_RotateDoor_Up.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/Door/BP_RotateDoor_Up.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/BP_RotateDoor_Up.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/Door/BP_KeyTeleportDoor.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/Door/BP_KeyTeleportDoor.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/BP_KeyTeleportDoor.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/BP_LeverActor.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/BP_LeverActor.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_21_47_取消提交了更改_[更改]/BP_LeverActor.uasset" />
+  </binary>
+</changelist>

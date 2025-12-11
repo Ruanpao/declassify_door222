@@ -1,0 +1,29 @@
+﻿<changelist name="在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]" date="1765463111422" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]/shelved.patch" />
+  <option name="DESCRIPTION" value="在进行更新之前于 2025/12/11 22:25 取消提交了更改 [更改]" />
+  <binary>
+    <option name="BEFORE_PATH" value="Content/Map/FirstMap.umap" />
+    <option name="AFTER_PATH" value="Content/Map/FirstMap.umap" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]/FirstMap.umap" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/Slot/BP_Slot.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/Slot/BP_Slot.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]/BP_Slot.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/Map/PlayGame.umap" />
+    <option name="AFTER_PATH" value="Content/Map/PlayGame.umap" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]/PlayGame.umap" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/BP_FinalDoor.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/BP_FinalDoor.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]/BP_FinalDoor.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/DataTable/DT_Item.uasset" />
+    <option name="AFTER_PATH" value="Content/DataTable/DT_Item.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_11_22_25_取消提交了更改_[更改]/DT_Item.uasset" />
+  </binary>
+</changelist>

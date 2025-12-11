@@ -275,24 +275,43 @@ void Adeclassify_doorCharacter::PaintDoor()
 	}
 }
 
-void Adeclassify_doorCharacter::PickupStonePlate(AStonePlate* NewStonePlate)
+void Adeclassify_doorCharacter::PickupStonePlate(const FLinearColor NewPlateColor)
 {
-	if(NewStonePlate->GetPlateColor() == FLinearColor::Red)
+	//存储颜色
+	CollectedPlateColors.Add(NewPlateColor);
+    
+	// 确保 CurrentAllStonePlate 有足够的空间
+	int32 Index = -1;
+	if(NewPlateColor == FLinearColor::Red) Index = 0;
+	else if(NewPlateColor == FLinearColor::Green) Index = 1;
+	else if(NewPlateColor == FLinearColor::Blue) Index = 2;
+	else if(NewPlateColor == FLinearColor::White) Index = 3;
+    
+	if(Index >= 0)
 	{
-		CurrentAllStonePlate.Insert(NewStonePlate,0);
+		// 确保数组大小足够
+		if(CollectedPlateColors.Num() <= Index)
+		{
+			CollectedPlateColors.SetNum(Index + 1);
+		}
+		
 	}
-	else if(NewStonePlate->GetPlateColor() == FLinearColor::Green)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,1);
-	}
-	else if(NewStonePlate->GetPlateColor() == FLinearColor::Blue)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,2);
-	}
-	else if(NewStonePlate->GetPlateColor() == FLinearColor::White)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,3);
-	}
+	// if(NewStonePlate->GetPlateColor() == FLinearColor::Red)
+	// {
+	// 	CurrentAllStonePlate.Insert(NewStonePlate,0);
+	// }
+	// else if(NewStonePlate->GetPlateColor() == FLinearColor::Green)
+	// {
+	// 	CurrentAllStonePlate.Insert(NewStonePlate,1);
+	// }
+	// else if(NewStonePlate->GetPlateColor() == FLinearColor::Blue)
+	// {
+	// 	CurrentAllStonePlate.Insert(NewStonePlate,2);
+	// }
+	// else if(NewStonePlate->GetPlateColor() == FLinearColor::White)
+	// {
+	// 	CurrentAllStonePlate.Insert(NewStonePlate,3);
+	// }
 }
 
 void Adeclassify_doorCharacter::PickupPaint(const FLinearColor& NewColor)

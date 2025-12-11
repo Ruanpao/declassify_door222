@@ -160,14 +160,14 @@ public:
 
 	//所有携带的石板
 	UPROPERTY(BlueprintReadOnly, Category="StonePlate")
-	TArray<AStonePlate*> CurrentAllStonePlate;
+	TArray<FLinearColor>  CollectedPlateColors;
 
 	//是否携带石板
 	UPROPERTY(BlueprintReadOnly, Category="StonePlate")
 	bool bHasStonePlate = false;
 
 	UFUNCTION(BlueprintCallable, Category = "StonePlate")
-	void PickupStonePlate(AStonePlate* NewStonePlate);
+	void PickupStonePlate(const FLinearColor NewPlateColor);
 
 	UFUNCTION(BlueprintCallable,Category = "Paint")
 	void PickupPaint(const FLinearColor& NewColor);

@@ -41,6 +41,7 @@ void AStonePlate::OnInteract_Implementation(AActor* Interactor)
 		if(Character->IsA(Adeclassify_doorCharacter::StaticClass()))
 		{
 			Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(Character);
+			
 			if(MyCharacter->InventoryComponent)
 			{
 				MyCharacter->PickupStonePlate(this);

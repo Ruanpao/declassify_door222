@@ -25,7 +25,7 @@ ASlotActor::ASlotActor()
     
     // 初始化变量
     bHasPlate = false;
-    CurrentPlateColor = FLinearColor::White;
+    CurrentPlateColor = FLinearColor::Black;
 }
 
 void ASlotActor::BeginPlay()

@@ -54,7 +54,7 @@ private:
 	
 	// 默认颜色
 	UPROPERTY(EditAnywhere, Category = "SlotStone")
-	FLinearColor DefaultColor = FLinearColor(0.5f, 0.5f, 0.5f, 1.0f); // 灰色
+	FLinearColor DefaultColor = FLinearColor(0.0f, 0.0f, 0.0f, 1.0f); // 灰色
 	
 	// 当前石板颜色
 	UPROPERTY()

@@ -48,6 +48,10 @@ void AFinalDoor::AddKey()
 	if(CurrentNumberOfKeys == 3)
 	{
 		DoorMesh->SetVisibility(true);
+		if(DoorCreateSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this,DoorCreateSound,GetActorLocation());
+		}
 	}
 }
 

@@ -10,6 +10,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlatePlaced, FLinearColor, PlateColor);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlateNumber, int32, Number);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlateRemoved, FLinearColor, PlateColor);
 
 UCLASS()
 class DECLASSIFY_DOOR_API ASlotActor : public AActor,public IInteractInterface
@@ -31,6 +32,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable,Category="SlotStone")
 	FOnPlateNumber OnPlateNumber;
+
+	UPROPERTY(BlueprintAssignable,Category="SlotStone")
+	FOnPlateRemoved OnPlateRemoved;
 	
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="SlotStone",meta=(AllowPrivateAccess="true"))

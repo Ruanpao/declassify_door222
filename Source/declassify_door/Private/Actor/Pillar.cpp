@@ -41,6 +41,7 @@ void APillar::BeginPlay()
 		{
 			SlotActor->OnPlatePlaced.AddDynamic(this,&APillar::ReceivePlateColor);
 			SlotActor->OnPlateNumber.AddDynamic(this,&APillar::UpdateAnsNumber);
+			SlotActor->OnPlateRemoved.AddDynamic(this,&APillar::RemovePlateColor);
 		}
 	}
 }
@@ -55,6 +56,7 @@ void APillar::ReceivePlateColor(FLinearColor Color)
 {
 	if(bUnlocked || ReceivedColors.Num() >= 4)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("石板数量大于四个"));
 		return;
 	}
 
@@ -121,5 +123,42 @@ void APillar::UpdateAnsNumber(int32 Number)
 	{
 		bIsNumber = false;
 	}
+}
+
+void APillar::RemovePlateColor(FLinearColor Color)
+{
+	if(bUnlocked)
+	{
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("当前石柱存储的颜色数量: %d"), ReceivedColors.Num());
+
+	for(int32 i = 0; i < ReceivedColors.Num(); i++)
+	{
+		FLinearColor& StoredColor = ReceivedColors[i];
+		UE_LOG(LogTemp, Warning, TEXT("颜色  [%d]: R=%.3f G=%.3f B=%.3f A=%.3f"), 
+			i, StoredColor.R, StoredColor.G, StoredColor.B, StoredColor.A);
+		
+		// 显示颜色比较结果
+		float Difference = FMath::Abs(StoredColor.R - Color.R) + 
+						  FMath::Abs(StoredColor.G - Color.G) + 
+						  FMath::Abs(StoredColor.B - Color.B);
+		bool bMatches = StoredColor.Equals(Color, 0.1f);
+		UE_LOG(LogTemp, Warning, TEXT(" 颜色     与目标颜色差异: %.3f, 是否匹配(容差0.1): %s"), 
+			Difference, bMatches ? TEXT("是") : TEXT("否"));
+	}
+
+	
+	for(int32 i = 0; i < ReceivedColors.Num(); i++)
+	{
+		if(ReceivedColors[i].Equals(Color, 0.1f))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("移除石板"));
+			ReceivedColors.RemoveAt(i);
+			break;
+		}
+	}
+	
 }
 

@@ -30,7 +30,9 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "Pillar")
 	void UpdateAnsNumber(int32 Number);
-	
+
+	UFUNCTION(BlueprintCallable,Category = "Pillar")
+	void RemovePlateColor(FLinearColor Color);
 private:
 	UPROPERTY(VisibleAnywhere,Category = "Pillar")
 	USceneComponent* RootComp;

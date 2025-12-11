@@ -28,4 +28,7 @@ private:
 	class UStaticMeshComponent* DoorMesh;
 
 	int32 CurrentNumberOfKeys = 0;
+
+	UPROPERTY(EditAnywhere, Category = "FinalDoor")
+	class USoundBase* DoorCreateSound;
 };

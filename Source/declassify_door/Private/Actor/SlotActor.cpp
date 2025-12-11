@@ -69,10 +69,14 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
         
         OnPlateNumber.Broadcast(-AnsNumber);
         UE_LOG(LogTemp, Warning, TEXT("ASlotActor::OnInteract_Implementation - Broadcast OnPlateNumber with value: %d"), -AnsNumber);
-        
+
+    	OnPlateRemoved.Broadcast(CurrentPlate->GetPlateColor());
+    	UE_LOG(LogTemp, Warning, TEXT("回收的 颜色: R=%.3f G=%.3f B=%.3f"), CurrentPlate->GetPlateColor().R, CurrentPlate->GetPlateColor().G, CurrentPlate->GetPlateColor().B);
+    	
         CurrentPlate = nullptr;
         UE_LOG(LogTemp, Warning, TEXT("ASlotActor::OnInteract_Implementation - CurrentPlate set to nullptr"));
         replaced = true;
+    	
     }
     else
     {
@@ -152,19 +156,19 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
     }
 
     UE_LOG(LogTemp, Warning, TEXT("ASlotActor::OnInteract_Implementation - End"));
-			Player->bHasStonePlate = false;
-			Player->CurrentStonePlate = nullptr;
-			
-			OnPlateNumber.Broadcast(AnsNumber);
-			OnPlatePlaced.Broadcast(NewPlate->GetPlateColor());
-			
-			Player->InventoryComponent->DestroyAOldSlot(Player->InventoryComponent->HeldItem.Index);
-			Player->InventoryComponent->UpdateHeldSlot(0);
-		}
+	// 		Player->bHasStonePlate = false;
+	// 		Player->CurrentStonePlate = nullptr;
+	// 		
+	// 		OnPlateNumber.Broadcast(AnsNumber);
+	// 		OnPlatePlaced.Broadcast(NewPlate->GetPlateColor());
+	// 		
+	// 		Player->InventoryComponent->DestroyAOldSlot(Player->InventoryComponent->HeldItem.Index);
+	// 		Player->InventoryComponent->UpdateHeldSlot(0);
+	// 	}
 		if(PutSound)
 		{
 			UGameplayStatics::PlaySoundAtLocation(this,PutSound,GetActorLocation());
 		}
-	}
+	// }
 }
 

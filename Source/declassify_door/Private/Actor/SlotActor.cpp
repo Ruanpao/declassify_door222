@@ -39,7 +39,7 @@ void ASlotActor::BeginPlay()
         if (DynamicMaterial)
         {
             // 设置默认颜色
-            DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), DefaultColor);
+            DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), DefaultColor);
             UE_LOG(LogTemp, Warning, TEXT("SlotActor: Dynamic material created successfully with default color"));
         }
         else
@@ -126,7 +126,7 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             // 更新SlotMesh颜色
             if (DynamicMaterial)
             {
-                DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), PlateColor);
+                DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), PlateColor);
                 UE_LOG(LogTemp, Warning, TEXT("SlotMesh color updated to match plate color"));
             }
             else
@@ -173,7 +173,7 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             // 重置SlotMesh颜色为默认颜色
             if (DynamicMaterial)
             {
-                DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), DefaultColor);
+                DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), DefaultColor);
                 UE_LOG(LogTemp, Warning, TEXT("SlotMesh color reset to default"));
             }
             

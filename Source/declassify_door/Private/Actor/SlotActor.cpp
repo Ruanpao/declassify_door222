@@ -4,6 +4,8 @@
 #include "Components/TextRenderComponent.h"
 #include "declassify_door/declassify_doorCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/StaticMeshComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 ASlotActor::ASlotActor()
 {
@@ -20,17 +22,42 @@ ASlotActor::ASlotActor()
     SlotText->SetHorizontalAlignment(EHTA_Center);
     SlotText->SetVerticalAlignment(EVRTA_TextCenter);
     SlotText->SetText(FText::FromString(TEXT("12")));
+    
+    // 初始化变量
+    bHasPlate = false;
+    CurrentPlateColor = FLinearColor::White;
 }
 
 void ASlotActor::BeginPlay()
 {
     Super::BeginPlay();
+    
+    // 创建动态材质实例
+    if (SlotMesh && SlotMesh->GetMaterial(0))
+    {
+        DynamicMaterial = SlotMesh->CreateAndSetMaterialInstanceDynamic(0);
+        if (DynamicMaterial)
+        {
+            // 设置默认颜色
+            DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), DefaultColor);
+            UE_LOG(LogTemp, Warning, TEXT("SlotActor: Dynamic material created successfully with default color"));
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("SlotActor: Failed to create dynamic material"));
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("SlotActor: SlotMesh or base material is null"));
+    }
 }
 
 void ASlotActor::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 }
+
 void ASlotActor::OnInteract_Implementation(AActor* Interactor)
 {
     UE_LOG(LogTemp, Warning, TEXT("=== ASlotActor::OnInteract_Implementation - START ==="));
@@ -43,9 +70,9 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
     }
 
     UE_LOG(LogTemp, Warning, TEXT("Current StoredPlateID: %s"), *StoredPlateID.ToString());
-    UE_LOG(LogTemp, Warning, TEXT("CurrentPlate exists: %s"), CurrentPlate ? TEXT("YES") : TEXT("NO"));
+    UE_LOG(LogTemp, Warning, TEXT("Has plate: %s"), bHasPlate ? TEXT("YES") : TEXT("NO"));
 
-    if (!CurrentPlate)
+    if (!bHasPlate)
     {
         UE_LOG(LogTemp, Warning, TEXT("--- PLACEMENT MODE ---"));
         
@@ -69,84 +96,56 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             Player->InventoryComponent->RemoveFromInventory(HeldItemIndex, false, false);
             UE_LOG(LogTemp, Warning, TEXT("Removed from inventory: %s"), *HeldItemID.ToString());
 
-            // 生成石板actor
-            FVector SpawnLocation = GetActorLocation() + PlateOffset;
-            FRotator SpawnRotation = GetActorRotation();
+            // 设置石板颜色
+            FLinearColor PlateColor = FLinearColor::White; // 默认白色
             
-            UE_LOG(LogTemp, Warning, TEXT("Spawning plate at: X=%.1f Y=%.1f Z=%.1f"), 
-                SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
-            
-            // 使用FActorSpawnParameters确保正确生成
-            FActorSpawnParameters SpawnParams;
-            SpawnParams.Owner = this;
-            SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-            
-            AStonePlate* NewPlate = GetWorld()->SpawnActor<AStonePlate>(AStonePlate::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
-            if (NewPlate)
+            if (HeldItemID == FName("7"))
             {
-                NewPlate->ItemID = HeldItemID;
-                NewPlate->bIsInSlot = true;
-                
-                // 确保网格组件被正确设置
-                if (NewPlate->PlateMesh)
-                {
-                    // 设置石板网格为可见
-                    NewPlate->PlateMesh->SetVisibility(true);
-                    NewPlate->PlateMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-                    
-                    UE_LOG(LogTemp, Warning, TEXT("Plate mesh component is valid and set to visible"));
-                }
-                else
-                {
-                    UE_LOG(LogTemp, Error, TEXT("Plate mesh component is NULL!"));
-                }
-                
-                // 设置石板颜色
-                if (HeldItemID == FName("7"))
-                {
-                    NewPlate->PlateColor = FLinearColor::Red;
-                    UE_LOG(LogTemp, Warning, TEXT("Plate color set to RED"));
-                }
-                else if (HeldItemID == FName("8"))
-                {
-                    NewPlate->PlateColor = FLinearColor::Green;
-                    UE_LOG(LogTemp, Warning, TEXT("Plate color set to GREEN"));
-                }
-                else if (HeldItemID == FName("9"))
-                {
-                    NewPlate->PlateColor = FLinearColor::Blue;
-                    UE_LOG(LogTemp, Warning, TEXT("Plate color set to BLUE"));
-                }
-                else if (HeldItemID == FName("10"))
-                {
-                    NewPlate->PlateColor = FLinearColor::White;
-                    UE_LOG(LogTemp, Warning, TEXT("Plate color set to WHITE"));
-                }
-                
-                UMaterialInstanceDynamic* DynamicMaterial = SlotMesh->CreateAndSetMaterialInstanceDynamic(0);
-                if(DynamicMaterial)
-                {
-                    DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), CurrentPlate->PlateColor);
-                }
-                CurrentPlate = NewPlate;
-                
-                UE_LOG(LogTemp, Warning, TEXT("CurrentPlate set with ID: %s"), *CurrentPlate->ItemID.ToString());
-                
-                // 触发事件
-                OnPlateNumber.Broadcast(AnsNumber);
-                OnPlatePlaced.Broadcast(NewPlate->PlateColor);
-                
-                
-                UE_LOG(LogTemp, Warning, TEXT("Broadcast OnPlatePlaced with color and OnPlateNumber with value: %d"), AnsNumber);
-
-                if (PutSound)
-                {
-                    UGameplayStatics::PlaySoundAtLocation(this, PutSound, GetActorLocation());
-                }
+                PlateColor = FLinearColor::Red;
+                UE_LOG(LogTemp, Warning, TEXT("Plate color set to RED"));
+            }
+            else if (HeldItemID == FName("8"))
+            {
+                PlateColor = FLinearColor::Green;
+                UE_LOG(LogTemp, Warning, TEXT("Plate color set to GREEN"));
+            }
+            else if (HeldItemID == FName("9"))
+            {
+                PlateColor = FLinearColor::Blue;
+                UE_LOG(LogTemp, Warning, TEXT("Plate color set to BLUE"));
+            }
+            else if (HeldItemID == FName("10"))
+            {
+                PlateColor = FLinearColor::White;
+                UE_LOG(LogTemp, Warning, TEXT("Plate color set to WHITE"));
+            }
+            
+            // 保存当前石板颜色
+            CurrentPlateColor = PlateColor;
+            
+            // 更新SlotMesh颜色
+            if (DynamicMaterial)
+            {
+                DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), PlateColor);
+                UE_LOG(LogTemp, Warning, TEXT("SlotMesh color updated to match plate color"));
             }
             else
             {
-                UE_LOG(LogTemp, Error, TEXT("Failed to spawn new plate!"));
+                UE_LOG(LogTemp, Warning, TEXT("No dynamic material available for color update"));
+            }
+            
+            // 标记为有石板
+            bHasPlate = true;
+            
+            // 触发事件
+            OnPlateNumber.Broadcast(AnsNumber);
+            OnPlatePlaced.Broadcast(PlateColor);
+            
+            UE_LOG(LogTemp, Warning, TEXT("Broadcast OnPlatePlaced with color and OnPlateNumber with value: %d"), AnsNumber);
+
+            if (PutSound)
+            {
+                UGameplayStatics::PlaySoundAtLocation(this, PutSound, GetActorLocation());
             }
         }
         else
@@ -168,18 +167,24 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             Player->InventoryComponent->AddToInventory(StoredPlateID, 1);
             
             // 触发移除事件
-            OnPlateRemoved.Broadcast(CurrentPlate->PlateColor);
+            OnPlateRemoved.Broadcast(CurrentPlateColor);
             OnPlateNumber.Broadcast(-AnsNumber);
             
+            // 重置SlotMesh颜色为默认颜色
+            if (DynamicMaterial)
+            {
+                DynamicMaterial->SetVectorParameterValue(TEXT("BaseColor"), DefaultColor);
+                UE_LOG(LogTemp, Warning, TEXT("SlotMesh color reset to default"));
+            }
+            
             UE_LOG(LogTemp, Warning, TEXT("Broadcast OnPlateRemoved with color"));
-            UE_LOG(LogTemp, Warning, TEXT("Destroying CurrentPlate with ID: %s"), *CurrentPlate->ItemID.ToString());
             
-            // 销毁石板actor
-            CurrentPlate->Destroy();
-            CurrentPlate = nullptr;
+            // 重置状态
+            bHasPlate = false;
             StoredPlateID = FName("0");
+            CurrentPlateColor = FLinearColor::White;
             
-            UE_LOG(LogTemp, Warning, TEXT("CurrentPlate set to nullptr, StoredPlateID reset to: %s"), *StoredPlateID.ToString());
+            UE_LOG(LogTemp, Warning, TEXT("Plate removed, state reset"));
         }
         else
         {

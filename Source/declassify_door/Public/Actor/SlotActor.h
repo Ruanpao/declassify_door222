@@ -38,6 +38,7 @@ public:
 
 	UPROPERTY()
 	FName StoredPlateID;
+
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="SlotStone",meta=(AllowPrivateAccess="true"))
 	class UStaticMeshComponent* SlotMesh;
@@ -59,4 +60,6 @@ private:
 
 	UPROPERTY(EditAnywhere,Category = "SlotStone")
 	class USoundBase * PutSound;
+
+
 };

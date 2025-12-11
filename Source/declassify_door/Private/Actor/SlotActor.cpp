@@ -31,7 +31,6 @@ void ASlotActor::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 }
-
 void ASlotActor::OnInteract_Implementation(AActor* Interactor)
 {
     UE_LOG(LogTemp, Warning, TEXT("=== ASlotActor::OnInteract_Implementation - START ==="));
@@ -77,11 +76,30 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             UE_LOG(LogTemp, Warning, TEXT("Spawning plate at: X=%.1f Y=%.1f Z=%.1f"), 
                 SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
             
-            AStonePlate* NewPlate = GetWorld()->SpawnActor<AStonePlate>(SpawnLocation, SpawnRotation);
+            // 使用FActorSpawnParameters确保正确生成
+            FActorSpawnParameters SpawnParams;
+            SpawnParams.Owner = this;
+            SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+            
+            AStonePlate* NewPlate = GetWorld()->SpawnActor<AStonePlate>(AStonePlate::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
             if (NewPlate)
             {
                 NewPlate->ItemID = HeldItemID;
                 NewPlate->bIsInSlot = true;
+                
+                // 确保网格组件被正确设置
+                if (NewPlate->PlateMesh)
+                {
+                    // 设置石板网格为可见
+                    NewPlate->PlateMesh->SetVisibility(true);
+                    NewPlate->PlateMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+                    
+                    UE_LOG(LogTemp, Warning, TEXT("Plate mesh component is valid and set to visible"));
+                }
+                else
+                {
+                    UE_LOG(LogTemp, Error, TEXT("Plate mesh component is NULL!"));
+                }
                 
                 // 设置石板颜色
                 if (HeldItemID == FName("7"))
@@ -105,15 +123,19 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
                     UE_LOG(LogTemp, Warning, TEXT("Plate color set to WHITE"));
                 }
                 
-                // 附加到槽位
-                NewPlate->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+                UMaterialInstanceDynamic* DynamicMaterial = SlotMesh->CreateAndSetMaterialInstanceDynamic(0);
+                if(DynamicMaterial)
+                {
+                    DynamicMaterial->SetVectorParameterValue(TEXT("BaseColorFactor"), CurrentPlate->PlateColor);
+                }
                 CurrentPlate = NewPlate;
                 
                 UE_LOG(LogTemp, Warning, TEXT("CurrentPlate set with ID: %s"), *CurrentPlate->ItemID.ToString());
                 
                 // 触发事件
-                OnPlatePlaced.Broadcast(NewPlate->PlateColor);
                 OnPlateNumber.Broadcast(AnsNumber);
+                OnPlatePlaced.Broadcast(NewPlate->PlateColor);
+                
                 
                 UE_LOG(LogTemp, Warning, TEXT("Broadcast OnPlatePlaced with color and OnPlateNumber with value: %d"), AnsNumber);
 
@@ -147,6 +169,7 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             
             // 触发移除事件
             OnPlateRemoved.Broadcast(CurrentPlate->PlateColor);
+            OnPlateNumber.Broadcast(-AnsNumber);
             
             UE_LOG(LogTemp, Warning, TEXT("Broadcast OnPlateRemoved with color"));
             UE_LOG(LogTemp, Warning, TEXT("Destroying CurrentPlate with ID: %s"), *CurrentPlate->ItemID.ToString());

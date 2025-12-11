@@ -51,35 +51,62 @@ void APillar::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
 void APillar::ReceivePlateColor(FLinearColor Color)
 {
-	if(bUnlocked || ReceivedColors.Num() >= 4)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("石板数量大于四个"));
-		return;
-	}
+    if(bUnlocked || ReceivedColors.Num() >= 4)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("石板数量大于四个"));
+        return;
+    }
+	
+    for(int32 i = 0; i < ReceivedColors.Num(); i++)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("  [%d]: R=%.3f, G=%.3f, B=%.3f, A=%.3f"), 
+            i, ReceivedColors[i].R, ReceivedColors[i].G, ReceivedColors[i].B, ReceivedColors[i].A);
+    }
+	
+    for(int32 i = 0; i < TargetColors.Num(); i++)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("  [%d]: R=%.3f, G=%.3f, B=%.3f, A=%.3f"), 
+            i, TargetColors[i].R, TargetColors[i].G, TargetColors[i].B, TargetColors[i].A);
+    }
+    
+    ReceivedColors.Add(Color);
 
-	ReceivedColors.Add(Color);
+    if(ReceivedColors.Num() == 4)
+    {
+        
+        bool bCorrect = true;
+        for(int32 i = 0; i < 4; i++)
+        {
+            FLinearColor received = ReceivedColors[i];
+            FLinearColor target = TargetColors[i];
+            
+            // 计算颜色差异
+            float rDiff = FMath::Abs(received.R - target.R);
+            float gDiff = FMath::Abs(received.G - target.G);
+            float bDiff = FMath::Abs(received.B - target.B);
+            float totalDiff = rDiff + gDiff + bDiff;
+            
+            bool bMatches = ReceivedColors[i].Equals(TargetColors[i], 0.1f);
 
-	if(ReceivedColors.Num() == 4)
-	{
-		bool bCorrect = true;
-		for(int32 i = 0; i < 4; i++)
-		{
-			if(!ReceivedColors[i].Equals(TargetColors[i],0.1f))
-			{
-				bCorrect = false;
-				break;
-			}
-		}
-		if(bCorrect && bIsNumber)
-		{
-			bUnlocked = true;
+            if(!bMatches)
+            {
+                bCorrect = false;
+                break;
+            }
+        }
+    	
+        
+        if(bCorrect && bIsNumber)
+        {
+            bUnlocked = true;
+            StartLowering();
+        }
 
-			StartLowering();
-		}
-	}
+    	
+    }
+    
 }
 
 void APillar::StartLowering()
@@ -91,6 +118,7 @@ void APillar::StartLowering()
 	bLowering = true;
 	LowerProgress = 0.0f;
 
+	
 	GetWorld()->GetTimerManager().SetTimer(LowerTimer,this,&APillar::UpdateLowering,0.04f,true);
 }
 

@@ -37,6 +37,10 @@ void Adeclassify_doorPlayerController::BeginPlay()
         PauseMenuWidget->AddToViewport(1000); // 使用较高的ZOrder确保在最前面
         PauseMenuWidget->SetVisibility(ESlateVisibility::Hidden);
     }
+
+    bShowMouseCursor = false;
+    FInputModeGameOnly InputMode;
+    SetInputMode(InputMode);
 }
 
 void Adeclassify_doorPlayerController::SetupInputComponent()
@@ -87,8 +91,6 @@ void Adeclassify_doorPlayerController::ShowPauseMenu()
     // 创建暂停菜单
     
     PauseMenuWidget->SetVisibility(ESlateVisibility::Visible);
-
-    // 显示暂停菜单
     
     // 设置游戏暂停
     SetPause(true);

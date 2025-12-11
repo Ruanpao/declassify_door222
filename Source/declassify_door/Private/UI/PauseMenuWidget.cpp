@@ -34,7 +34,9 @@ void UPauseMenuWidget::ContinueGame()
 void UPauseMenuWidget::QuitGame()
 {
 	// 退出游戏
-	UKismetSystemLibrary::QuitGame(GetWorld(), GetOwningPlayer(), EQuitPreference::Quit, false);
+	//UKismetSystemLibrary::QuitGame(GetWorld(), GetOwningPlayer(), EQuitPreference::Quit, false);
+	UGameplayStatics::OpenLevel(GetWorld(), "MenuMap"); // 替换为你的游戏地图
+
 }
 
 void UPauseMenuWidget::OnContinueClicked()

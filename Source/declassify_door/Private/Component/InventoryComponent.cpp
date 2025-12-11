@@ -230,6 +230,12 @@ void UInventoryComponent::UpdateSlot()
 
 void UInventoryComponent::RemoveFromInventory(int32 Index, bool RemoveAll, bool IsConsumed)
 {
+
+	    UE_LOG(LogTemp, Warning, TEXT("=== UInventoryComponent::RemoveFromInventory - START ==="));
+        UE_LOG(LogTemp, Warning, TEXT("Removing from index %d, RemoveAll: %s, IsConsumed: %s"), 
+            Index, RemoveAll ? TEXT("true") : TEXT("false"), IsConsumed ? TEXT("true") : TEXT("false"));
+        UE_LOG(LogTemp, Warning, TEXT("Before removal - Slot[%d]: ID=%s, Quantity=%d"), 
+            Index, *Slot[Index].ID.ToString(), Slot[Index].Quantity);
 	if(Slot[Index].Quantity == 1 or RemoveAll)
 	{
 		if(IsConsumed)
@@ -286,6 +292,11 @@ void UInventoryComponent::RemoveFromInventory(int32 Index, bool RemoveAll, bool 
 			}
 		}
 	}
+
+	UE_LOG(LogTemp, Warning, TEXT("After removal - Slot[%d]: ID=%s, Quantity=%d"), 
+	Index, *Slot[Index].ID.ToString(), Slot[Index].Quantity);
+    
+	UE_LOG(LogTemp, Warning, TEXT("=== UInventoryComponent::RemoveFromInventory - END ===\n"));
 }
 
 void UInventoryComponent::RemoveOne(int32 Index, int32 Quantity)
@@ -342,98 +353,33 @@ void UInventoryComponent::UpdateHeldSlot(int32 Index)
 	Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(GetOwner());
 	if(MyCharacter)
 	{
-		if(HeldItem.ID==FName("2"))
+		// 只在物品ID为2-5时设置油漆，石板ID 7-10不设置油漆
+		if(HeldItem.ID == FName("2"))
 		{
 			MyCharacter->PickupPaint(FLinearColor::Red);
-			MyCharacter->bHasPaint=true;
-			UE_LOG(LogInventory , Warning , TEXT("RED"));
-
+			MyCharacter->bHasPaint = true;
 		}
-		else if(HeldItem.ID==FName("3"))
+		else if(HeldItem.ID == FName("3"))
 		{
 			MyCharacter->PickupPaint(FLinearColor::Green);
-			MyCharacter->bHasPaint=true;
-			UE_LOG(LogInventory , Warning , TEXT("GREEN"));
-
+			MyCharacter->bHasPaint = true;
 		}
-		else if(HeldItem.ID==FName("4"))
+		else if(HeldItem.ID == FName("4"))
 		{
 			MyCharacter->PickupPaint(FLinearColor::Blue);
-			MyCharacter->bHasPaint=true;
-			UE_LOG(LogInventory , Warning , TEXT("BLUE"));
+			MyCharacter->bHasPaint = true;
 		}
-		else if(HeldItem.ID==FName("5"))
+		else if(HeldItem.ID == FName("5"))
 		{
 			MyCharacter->PickupPaint(FLinearColor::White);
-			MyCharacter->bHasPaint=true;
-			UE_LOG(LogInventory , Warning , TEXT("WHITE"));
+			MyCharacter->bHasPaint = true;
 		}
 		else
 		{
-			MyCharacter->bHasPaint=false;
-			UE_LOG(LogInventory , Warning , TEXT("bHasPaint=false"));
-
+			// 石板或其他物品不设置油漆标志
+			MyCharacter->bHasPaint = false;
 		}
-
-		if(HeldItem.ID == FName("7"))
-		{
-			if(MyCharacter->CurrentAllStonePlate.Num() > 0)
-			{
-				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[0];
-				MyCharacter->bHasStonePlate = true;
-			}
-			else
-			{
-				MyCharacter->CurrentStonePlate = nullptr;
-				MyCharacter->bHasStonePlate = false;
-			}
-		}
-		else if(HeldItem.ID == FName("8"))
-		{
-			if(MyCharacter->CurrentAllStonePlate.Num() > 1)
-			{
-				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[1];
-				MyCharacter->bHasStonePlate = true;
-			}
-			else
-			{
-				MyCharacter->CurrentStonePlate = nullptr;
-				MyCharacter->bHasStonePlate = false;
-			}
-		}
-		else if(HeldItem.ID == FName("9"))
-		{
-			if(MyCharacter->CurrentAllStonePlate.Num() > 2)
-			{
-				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[2];
-				MyCharacter->bHasStonePlate = true;
-			}
-			else
-			{
-				MyCharacter->CurrentStonePlate = nullptr;
-				MyCharacter->bHasStonePlate = false;
-			}
-		}
-		else if(HeldItem.ID == FName("10"))
-		{
-			if(MyCharacter->CurrentAllStonePlate.Num() > 3)
-			{
-				MyCharacter->CurrentStonePlate = MyCharacter->CurrentAllStonePlate[3];
-				MyCharacter->bHasStonePlate = true;
-			}
-			else
-			{
-				MyCharacter->CurrentStonePlate = nullptr;
-				MyCharacter->bHasStonePlate = false;
-			}
-		}
-		else
-		{
-			MyCharacter->CurrentStonePlate = nullptr;
-			MyCharacter->bHasStonePlate = false;
-		}
-		
+        
+		UE_LOG(LogInventory, Warning, TEXT("HeldItem Changed, ID: %s, Quantity: %d"), *HeldItem.ID.ToString(), HeldItem.Quantity);
 	}
-
-	UE_LOG(LogInventory , Warning , TEXT("HeldItem Changed, ID : %s , Quantity : %d"), *HeldItem.ID.ToString(), HeldItem.Quantity);
 }

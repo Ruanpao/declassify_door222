@@ -1,19 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Actor/StonePlate.h"
-
 #include "declassify_door/declassify_doorCharacter.h"
 #include "Kismet/GameplayStatics.h"
-
 
 AStonePlate::AStonePlate()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	
+    
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-	
-	// 创建石板网格
+    
 	PlateMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StoneMesh"));
 	PlateMesh->SetupAttachment(RootComponent);
 }
@@ -21,60 +17,43 @@ AStonePlate::AStonePlate()
 void AStonePlate::BeginPlay()
 {
 	Super::BeginPlay();
-	
-}
-
-void AStonePlate::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void AStonePlate::OnInteract_Implementation(AActor* Interactor)
 {
-	if(!Interactor)
+	UE_LOG(LogTemp, Warning, TEXT("=== AStonePlate::OnInteract_Implementation - START ==="));
+	UE_LOG(LogTemp, Warning, TEXT("StonePlate ItemID: %s, bIsInSlot: %s"), 
+		*ItemID.ToString(), bIsInSlot ? TEXT("true") : TEXT("false"));
+    
+	Adeclassify_doorCharacter* Player = Cast<Adeclassify_doorCharacter>(Interactor);
+	if (Player && Player->InventoryComponent)
 	{
-		return;
-	}
-	if(ACharacter* Character = Cast<ACharacter>(Interactor))
-	{
-		if(Character->IsA(Adeclassify_doorCharacter::StaticClass()))
+		// 只有在不在槽位中时才能捡起
+		if (!bIsInSlot)
 		{
-			Adeclassify_doorCharacter* MyCharacter = Cast<Adeclassify_doorCharacter>(Character);
-			if(MyCharacter->InventoryComponent)
+			UE_LOG(LogTemp, Warning, TEXT("Plate is not in slot, can be picked up"));
+			UE_LOG(LogTemp, Warning, TEXT("Adding to inventory: %s"), *ItemID.ToString());
+            
+			// 将石板对应的物品ID添加到玩家库存
+			Player->InventoryComponent->AddToInventory(ItemID, 1);
+            
+			UE_LOG(LogTemp, Warning, TEXT("Destroying stone plate actor"));
+            
+			if (PickupSound)
 			{
-				MyCharacter->PickupStonePlate(this);
-				
-				if(PlateColor==FLinearColor::Red)
-				{
-					MyCharacter->InventoryComponent->AddToInventory(FName("7"),1);
-				}
-				else if(PlateColor==FLinearColor::Green)
-				{
-					MyCharacter->InventoryComponent->AddToInventory(FName("8"),1);
-				}
-				else if(PlateColor==FLinearColor::Blue)
-				{
-					MyCharacter->InventoryComponent->AddToInventory(FName("9"),1);
-				}
-				else if(PlateColor==FLinearColor::White)
-				{
-					MyCharacter->InventoryComponent->AddToInventory(FName("10"),1);
-				}
-				
-			}
-			
-			if(PickupSound)
-			{
-				UGameplayStatics::PlaySoundAtLocation(this,PickupSound,GetActorLocation());
+				UGameplayStatics::PlaySoundAtLocation(this, PickupSound, GetActorLocation());
 			}
 			Destroy();
 		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Plate is in slot, cannot be picked up directly"));
+		}
 	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Player or InventoryComponent is null!"));
+	}
+    
+	UE_LOG(LogTemp, Warning, TEXT("=== AStonePlate::OnInteract_Implementation - END ===\n"));
 }
-
-void AStonePlate::SetPlateColor(FLinearColor NewColor)
-{
-	PlateColor = NewColor;
-}
-

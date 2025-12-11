@@ -275,25 +275,6 @@ void Adeclassify_doorCharacter::PaintDoor()
 	}
 }
 
-void Adeclassify_doorCharacter::PickupStonePlate(AStonePlate* NewStonePlate)
-{
-	if(NewStonePlate->GetPlateColor() == FLinearColor::Red)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,0);
-	}
-	else if(NewStonePlate->GetPlateColor() == FLinearColor::Green)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,1);
-	}
-	else if(NewStonePlate->GetPlateColor() == FLinearColor::Blue)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,2);
-	}
-	else if(NewStonePlate->GetPlateColor() == FLinearColor::White)
-	{
-		CurrentAllStonePlate.Insert(NewStonePlate,3);
-	}
-}
 
 void Adeclassify_doorCharacter::PickupPaint(const FLinearColor& NewColor)
 {
@@ -304,6 +285,12 @@ void Adeclassify_doorCharacter::PickupPaint(const FLinearColor& NewColor)
 void Adeclassify_doorCharacter::Interact()
 {
 	UE_LOG(LogTemp, Log, TEXT("尝试交互..."));
+
+	if(InventoryComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InventoryComponent valid, updating to slot 0"));
+		InventoryComponent->UpdateHeldSlot(InventoryComponent->HeldItem.Index);
+	}
     
 	AActor* InteractableActor = SphereTraceForInteractable();
     

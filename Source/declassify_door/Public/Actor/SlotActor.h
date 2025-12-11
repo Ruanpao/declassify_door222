@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Actor/StonePlate.h"
 #include "Interface/InteractInterface.h"
 #include "SlotActor.generated.h"
 
@@ -35,7 +34,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable,Category="SlotStone")
 	FOnPlateRemoved OnPlateRemoved;
-	
+
+	UPROPERTY()
+	FName StoredPlateID;
+
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="SlotStone",meta=(AllowPrivateAccess="true"))
 	class UStaticMeshComponent* SlotMesh;
@@ -46,14 +48,23 @@ private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite,Category="SlotStone",meta=(AllowPrivateAccess="true"))
 	class UTextRenderComponent* SlotText;
 
-	UPROPERTY(EditAnywhere,Category = "SlotStone")
-	FVector PlateOffset = FVector(0.0f,0.0f,10.0f);
-
-	UPROPERTY(BlueprintReadOnly,Category = "SlotStone",meta=(AllowPrivateAccess="true"))
-	AStonePlate* CurrentPlate = nullptr;
+	// 动态材质实例
+	UPROPERTY()
+	class UMaterialInstanceDynamic* DynamicMaterial;
 	
+	// 默认颜色
+	UPROPERTY(EditAnywhere, Category = "SlotStone")
+	FLinearColor DefaultColor = FLinearColor(0.5f, 0.5f, 0.5f, 1.0f); // 灰色
+	
+	// 当前石板颜色
+	UPROPERTY()
+	FLinearColor CurrentPlateColor;
+	
+	// 标记是否有石板
+	bool bHasPlate = false;
+
 	UPROPERTY(EditAnywhere,Category = "SlotStone")
-	int32 AnsNumber =0 ;
+	int32 AnsNumber = 0;
 
 	UPROPERTY(EditAnywhere,Category = "SlotStone")
 	class USoundBase * PutSound;

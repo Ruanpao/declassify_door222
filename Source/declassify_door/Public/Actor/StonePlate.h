@@ -19,17 +19,16 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	virtual void Tick(float DeltaTime) override;
 	
 	virtual void OnInteract_Implementation(AActor* Interactor) override;
 
-	UFUNCTION(BlueprintCallable,Category ="StonePlate" )
-	FLinearColor GetPlateColor() const {return PlateColor;}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StonePlate")
+	FName ItemID = "7"; // 默认红色石板，对应ID 7
 
-	UFUNCTION(BlueprintCallable,Category ="StonePlate" )
-	void SetPlateColor(FLinearColor NewColor);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "StonePlate")
+	bool bIsInSlot = false; // 标记是否在槽位中
 
-private:
+//private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite,Category ="StonePlate",meta =(AllowPrivateAccess="true"))
 	class UStaticMeshComponent* PlateMesh;
 

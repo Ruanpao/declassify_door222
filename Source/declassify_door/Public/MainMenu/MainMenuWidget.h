@@ -48,4 +48,23 @@ private:
 	void OnQuitGameClicked();
 
 	void PlayButtonSound();
+
+	// === 新增代码开始 ===
+	// 动画相关变量
+	UPROPERTY()
+	AActor* RotatingActor;
+    
+	UPROPERTY()
+	AActor* CameraActor;
+    
+	bool bIsAnimating;
+	float AnimationTime;
+	float TotalAnimationTime;
+	float CameraStartDistance;
+	float CameraTargetDistance;
+    
+	void StartAnimation();
+	void UpdateAnimation(float DeltaTime);
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	// === 新增代码结束 ===
 };

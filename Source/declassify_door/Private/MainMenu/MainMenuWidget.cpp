@@ -5,6 +5,10 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "MainMenu/MainMenuPlayerController.h"
+#include "EngineUtils.h" // 新增include
+#include "Actor/CompositeDoor.h"
+#include "Camera/CameraActor.h"
+#include "Actor/CompositeDoor.h"
 
 void UMainMenuWidget::NativeConstruct()
 {
@@ -32,7 +36,97 @@ void UMainMenuWidget::NativeConstruct()
     {
         UE_LOG(LogTemp, Error, TEXT("QuitGameButton is null!"));
     }
+
+    // === 新增代码开始 ===
+    // 初始化动画变量
+    bIsAnimating = false;
+    AnimationTime = 0.0f;
+    TotalAnimationTime = 3.0f; // 3秒动画
+    CameraStartDistance = 0.0f;
+    CameraTargetDistance = 2500.0f; // 摄像机前飞500单位
+    // === 新增代码结束 ===
 }
+
+// === 新增代码开始 ===
+void UMainMenuWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+    Super::NativeTick(MyGeometry, InDeltaTime);
+
+    if (bIsAnimating)
+    {
+        UpdateAnimation(InDeltaTime);
+    }
+}
+
+void UMainMenuWidget::StartAnimation()
+{
+    if (bIsAnimating) return;
+
+    UWorld* World = GetWorld();
+    if (!World) return;
+
+    // 查找旋转的Actor（查找第一个非摄像机的Actor）
+    for (TActorIterator<AActor> ActorItr(World); ActorItr; ++ActorItr)
+    {
+        AActor* Actor = *ActorItr;
+        if (Actor && Actor->IsA<ACompositeDoor>())
+        {
+            RotatingActor = Actor;
+            break;
+        }
+    }
+
+    // 查找摄像机
+    APlayerController* PC = GetOwningPlayer();
+    if (PC)
+    {
+        CameraActor = PC->GetViewTarget();
+        if (CameraActor)
+        {
+            CameraStartDistance = 0.0f;
+        }
+    }
+
+    bIsAnimating = true;
+    AnimationTime = 0.0f;
+
+    UE_LOG(LogTemp, Warning, TEXT("Starting animation"));
+}
+
+void UMainMenuWidget::UpdateAnimation(float DeltaTime)
+{
+    AnimationTime += DeltaTime;
+    float Alpha = FMath::Clamp(AnimationTime / TotalAnimationTime, 0.0f, 1.0f);
+
+    // 旋转Actor
+    if (RotatingActor)
+    {
+        FRotator NewRotation = RotatingActor->GetActorRotation();
+        NewRotation.Yaw += 60.0f * DeltaTime; // 每秒旋转180度
+        RotatingActor->SetActorRotation(NewRotation);
+    }
+
+    // 移动摄像机
+    if (CameraActor)
+    {
+        FVector NewLocation = CameraActor->GetActorLocation();
+        NewLocation.X += CameraTargetDistance * DeltaTime / TotalAnimationTime; // 向前移动
+        NewLocation.Y += 500 * DeltaTime / TotalAnimationTime; // 向前移动
+
+        CameraActor->SetActorLocation(NewLocation);
+    }
+
+    // 动画结束
+    if (AnimationTime >= TotalAnimationTime)
+    {
+        bIsAnimating = false;
+        UE_LOG(LogTemp, Warning, TEXT("Animation finished, loading level"));
+        
+        // 按照原来的逻辑加载新地图
+        UGameplayStatics::OpenLevel(GetWorld(), "PlayGame");
+    }
+}
+// === 新增代码结束 ===
 
 void UMainMenuWidget::StartGame()
 {
@@ -51,8 +145,12 @@ void UMainMenuWidget::OnStartGameClicked()
     PlayButtonSound();
     UE_LOG(LogTemp, Warning, TEXT("Start Game button clicked"));
     
-
-    UGameplayStatics::OpenLevel(GetWorld(), "PlayGame"); // 替换为你的游戏地图
+    // === 修改代码开始 ===
+    // 原来的直接加载地图改为先播放动画
+    // UGameplayStatics::OpenLevel(GetWorld(), "PlayGame"); // 注释掉原来的代码
+    
+    StartAnimation(); // 改为启动动画
+    // === 修改代码结束 ===
 }
 
 void UMainMenuWidget::OnQuitGameClicked()

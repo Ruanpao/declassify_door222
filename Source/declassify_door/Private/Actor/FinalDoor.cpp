@@ -2,6 +2,7 @@
 
 #include "Actor/FinalDoor.h"
 #include "Actor/DoorPiece.h"
+#include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "MainMenu/MainMenuPlayerController.h"
 
@@ -14,7 +15,9 @@ AFinalDoor::AFinalDoor()
     DoorMesh->SetupAttachment(RootComponent);
 
     DoorMesh->SetVisibility(false);
-    
+
+    PassCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PassCamera"));
+    PassCamera->SetupAttachment(RootComponent);
 }
 
 void AFinalDoor::BeginPlay()
@@ -53,6 +56,13 @@ void AFinalDoor::AddKey()
         {
             UGameplayStatics::PlaySoundAtLocation(this, DoorCreateSound, GetActorLocation());
         }
+
+        APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+        if (PlayerPawn)
+        {
+            StartCameraTransition(PlayerPawn);
+        }
+        
     }
 }
 
@@ -77,8 +87,45 @@ void AFinalDoor::OnInteract_Implementation(AActor* Interactor)
     }
 }
 
+void AFinalDoor::StartCameraTransition(APawn* TargetPawn)
+{
+    if(!TargetPawn || !TargetPawn->GetController())
+    {
+        return;
+    }
+
+    OriginalPawn = TargetPawn;
+    APlayerController* PC = Cast<APlayerController>(TargetPawn->GetController());
+    if(!PC)
+    {
+        return;
+    }
+
+    // 直接从玩家摄像机切换摄像机
+    PC->SetViewTargetWithBlend(this, CameraTransitionTime, VTBlend_Cubic, 1.0f, false);
+    
+    OriginalPawn->SetActorLocation(FVector(0, 0, 600));
+    
+    
+    GetWorld()->GetTimerManager().SetTimer(CameraTimerHandle, this, &AFinalDoor::ReturnToPlayerCamera, CameraHoldTime + CameraTransitionTime, false);
+
+}
+
 void AFinalDoor::ReturnToMainMenu()
 {
     UGameplayStatics::OpenLevel(GetWorld(), "EndMap");
+}
+
+void AFinalDoor::ReturnToPlayerCamera()
+{
+    if(OriginalPawn && OriginalPawn->GetController())
+    {
+        APlayerController* PC = Cast<APlayerController>(OriginalPawn->GetController());
+        if(PC)
+        {
+            PC->SetViewTargetWithBlend(OriginalPawn, CameraTransitionTime, VTBlend_Cubic, 1.0f, false);
+        }
+    }
+    OriginalPawn = nullptr;
 }
 

@@ -36,12 +36,21 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Pass")
 	UTextRenderComponent* GetTextRenderComponent() const{return TextRenderer;}
 
+	UFUNCTION(BlueprintCallable,Category="Pass")
+	void StartCameraTransition(APawn* TargetPawn);
+	
 private:
 	UPROPERTY(VisibleAnywhere,Category="Pass")
 	class UStaticMeshComponent* WallMesh;
 
 	UPROPERTY(VisibleAnywhere,Category="Pass")
 	class UTextRenderComponent* TextRenderer;
+
+	UPROPERTY(VisibleAnywhere,Category="Pass")
+	class UCameraComponent* PassCamera;
+
+	UPROPERTY(EditAnywhere,Category = "Pass")
+	class USoundBase * SucceedSound;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Pass",meta=(AllowPrivateAccess="true"))
 	FLinearColor RequiredColor = FLinearColor::Red;
@@ -51,4 +60,16 @@ private:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Pass",meta=(AllowPrivateAccess="true"))
 	float ColorTolerance = 0.1f;
+
+	UPROPERTY(EditAnywhere,Category = "Pass",meta = (AllowPrivateAccess = "true"))
+	float CameraTransitionTime = 2.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Pass", meta = (AllowPrivateAccess = "true"))
+	float CameraHoldTime = 2.0f;
+	
+
+	FTimerHandle CameraTimerHandle;
+	APawn* OriginalPawn = nullptr;
+	
+	void ReturnToPlayerCamera();
 };

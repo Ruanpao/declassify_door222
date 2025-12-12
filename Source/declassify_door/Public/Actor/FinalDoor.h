@@ -28,13 +28,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Interaction")
 	virtual void OnInteract_Implementation(AActor* Interactor) override;
 
-    
+	UFUNCTION(BlueprintCallable,Category="FinalDoor")
+	void StartCameraTransition(APawn* TargetPawn);
+	
 private:
 	UFUNCTION()
 	void ReturnToMainMenu();
     
 	UPROPERTY(EditAnywhere, Category = "FinalDoor")
 	class UStaticMeshComponent* DoorMesh;
+
+	UPROPERTY(VisibleAnywhere,Category="Pass")
+	class UCameraComponent* PassCamera;
 
 	int32 CurrentNumberOfKeys = 0;
 
@@ -43,4 +48,18 @@ private:
     
 	UPROPERTY(EditAnywhere, Category = "FinalDoor")
 	class USoundBase* InteractSound; // 交互音效
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="FinalDoor",meta=(AllowPrivateAccess="true"))
+	float ColorTolerance = 0.1f;
+
+	UPROPERTY(EditAnywhere,Category = "FinalDoor",meta = (AllowPrivateAccess = "true"))
+	float CameraTransitionTime = 2.0f;
+
+	UPROPERTY(EditAnywhere, Category = "FinalDoor", meta = (AllowPrivateAccess = "true"))
+	float CameraHoldTime = 3.0f;
+	
+	APawn* OriginalPawn = nullptr;
+	FTimerHandle CameraTimerHandle;
+
+	void ReturnToPlayerCamera();
 };

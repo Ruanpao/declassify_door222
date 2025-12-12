@@ -64,16 +64,17 @@ void UMainMenuWidget::StartAnimation()
     UWorld* World = GetWorld();
     if (!World) return;
 
-    // 查找旋转的Actor（查找第一个非摄像机的Actor）
+    // 查找有DoorToRotate tag的Actor
     for (TActorIterator<AActor> ActorItr(World); ActorItr; ++ActorItr)
     {
         AActor* Actor = *ActorItr;
-        if (Actor && Actor->IsA<ACompositeDoor>())
+        if (Actor && Actor->ActorHasTag("DoorToRotate"))
         {
             RotatingActor = Actor;
             break;
         }
     }
+
 
     // 查找摄像机
     APlayerController* PC = GetOwningPlayer();

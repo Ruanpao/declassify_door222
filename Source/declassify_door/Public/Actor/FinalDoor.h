@@ -38,7 +38,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "FinalDoor")
 	class UStaticMeshComponent* DoorMesh;
 
-	UPROPERTY(VisibleAnywhere,Category="Pass")
+	UPROPERTY(EditAnywhere,Category="Pass")
 	class UCameraComponent* PassCamera;
 
 	int32 CurrentNumberOfKeys = 0;

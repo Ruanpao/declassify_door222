@@ -119,7 +119,7 @@ public:
 	void Interact();
 	AActor* SphereTraceForInteractable();
 	UPROPERTY(EditAnywhere, Category = "Interaction")
-	float InteractRadius = 100.f;
+	float InteractRadius = 150.f;
 
 	UFUNCTION(BlueprintCallable, Category="MouseClick")
 	void HandleMouseClick();

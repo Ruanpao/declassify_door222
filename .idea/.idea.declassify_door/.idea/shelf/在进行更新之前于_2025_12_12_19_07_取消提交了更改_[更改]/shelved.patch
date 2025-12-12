@@ -1,0 +1,55 @@
+Index: Source/declassify_door/Public/Actor/FinalDoor.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Fill out your copyright notice in the Description page of Project Settings.\r\n\r\n#pragma once\r\n\r\n#include \"CoreMinimal.h\"\r\n#include \"GameFramework/Actor.h\"\r\n#include \"Interface/InteractInterface.h\" // 添加接口头文件\r\n#include \"FinalDoor.generated.h\"\r\n\r\nUCLASS()\r\nclass DECLASSIFY_DOOR_API AFinalDoor : public AActor, public IInteractInterface\r\n{\r\n\tGENERATED_BODY()\r\n    \r\npublic: \r\n\tAFinalDoor();\r\n\r\nprotected:\r\n\tvirtual void BeginPlay() override;\r\n\r\npublic: \r\n\tvirtual void Tick(float DeltaTime) override;\r\n\r\n\tUFUNCTION()\r\n\tvoid AddKey();\r\n    \r\n\t// 实现交互接口\r\n\tUFUNCTION(BlueprintCallable, Category = \"Interaction\")\r\n\tvirtual void OnInteract_Implementation(AActor* Interactor) override;\r\n\r\n\tUFUNCTION(BlueprintCallable,Category=\"FinalDoor\")\r\n\tvoid StartCameraTransition(APawn* TargetPawn);\r\n\t\r\nprivate:\r\n\tUFUNCTION()\r\n\tvoid ReturnToMainMenu();\r\n    \r\n\tUPROPERTY(EditAnywhere, Category = \"FinalDoor\")\r\n\tclass UStaticMeshComponent* DoorMesh;\r\n\r\n\tUPROPERTY(VisibleAnywhere,Category=\"Pass\")\r\n\tclass UCameraComponent* PassCamera;\r\n\r\n\tint32 CurrentNumberOfKeys = 0;\r\n\r\n\tUPROPERTY(EditAnywhere, Category = \"FinalDoor\")\r\n\tclass USoundBase* DoorCreateSound;\r\n    \r\n\tUPROPERTY(EditAnywhere, Category = \"FinalDoor\")\r\n\tclass USoundBase* InteractSound; // 交互音效\r\n\r\n\tUPROPERTY(EditAnywhere,BlueprintReadWrite,Category=\"FinalDoor\",meta=(AllowPrivateAccess=\"true\"))\r\n\tfloat ColorTolerance = 0.1f;\r\n\r\n\tUPROPERTY(EditAnywhere,Category = \"FinalDoor\",meta = (AllowPrivateAccess = \"true\"))\r\n\tfloat CameraTransitionTime = 2.0f;\r\n\r\n\tUPROPERTY(EditAnywhere, Category = \"FinalDoor\", meta = (AllowPrivateAccess = \"true\"))\r\n\tfloat CameraHoldTime = 3.0f;\r\n\t\r\n\tAPawn* OriginalPawn = nullptr;\r\n\tFTimerHandle CameraTimerHandle;\r\n\r\n\tvoid ReturnToPlayerCamera();\r\n};
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/declassify_door/Public/Actor/FinalDoor.h b/Source/declassify_door/Public/Actor/FinalDoor.h
+--- a/Source/declassify_door/Public/Actor/FinalDoor.h	(revision 34afd5d83af61d7c4c6f4243e6dc6360f2748084)
++++ b/Source/declassify_door/Public/Actor/FinalDoor.h	(date 1765537455296)
+@@ -38,8 +38,8 @@
+ 	UPROPERTY(EditAnywhere, Category = "FinalDoor")
+ 	class UStaticMeshComponent* DoorMesh;
+ 
+-	UPROPERTY(VisibleAnywhere,Category="Pass")
+-	class UCameraComponent* PassCamera;
++	UPROPERTY(EditAnywhere,Category="FinalDoor")
++	class UCameraComponent* FinalCamera;
+ 
+ 	int32 CurrentNumberOfKeys = 0;
+ 
+@@ -53,10 +53,10 @@
+ 	float ColorTolerance = 0.1f;
+ 
+ 	UPROPERTY(EditAnywhere,Category = "FinalDoor",meta = (AllowPrivateAccess = "true"))
+-	float CameraTransitionTime = 2.0f;
++	float CameraTransitionTime = 1.5f;
+ 
+ 	UPROPERTY(EditAnywhere, Category = "FinalDoor", meta = (AllowPrivateAccess = "true"))
+-	float CameraHoldTime = 3.0f;
++	float CameraHoldTime = 2.0f;
+ 	
+ 	APawn* OriginalPawn = nullptr;
+ 	FTimerHandle CameraTimerHandle;
+Index: Source/declassify_door/Private/Actor/FinalDoor.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Fill out your copyright notice in the Description page of Project Settings.\r\n\r\n#include \"Actor/FinalDoor.h\"\r\n#include \"Actor/DoorPiece.h\"\r\n#include \"Camera/CameraComponent.h\"\r\n#include \"Kismet/GameplayStatics.h\"\r\n#include \"MainMenu/MainMenuPlayerController.h\"\r\n\r\nAFinalDoor::AFinalDoor()\r\n{\r\n    PrimaryActorTick.bCanEverTick = true;\r\n\r\n    RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT(\"Root\"));\r\n    DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT(\"DoorMesh\"));\r\n    DoorMesh->SetupAttachment(RootComponent);\r\n\r\n    DoorMesh->SetVisibility(false);\r\n\r\n    PassCamera = CreateDefaultSubobject<UCameraComponent>(TEXT(\"PassCamera\"));\r\n    PassCamera->SetupAttachment(RootComponent);\r\n}\r\n\r\nvoid AFinalDoor::BeginPlay()\r\n{\r\n    Super::BeginPlay();\r\n\r\n    TArray<AActor*> FoundPieces;\r\n    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ADoorPiece::StaticClass(), FoundPieces);\r\n\r\n    for(AActor* Piece : FoundPieces)\r\n    {\r\n        ADoorPiece* PieceActor = Cast<ADoorPiece>(Piece);\r\n        if(PieceActor)\r\n        {\r\n            PieceActor->OnDoorOpened.AddDynamic(this, &AFinalDoor::AddKey);\r\n        }\r\n    }\r\n}\r\n\r\nvoid AFinalDoor::Tick(float DeltaTime)\r\n{\r\n    Super::Tick(DeltaTime);\r\n}\r\n\r\nvoid AFinalDoor::AddKey()\r\n{\r\n    CurrentNumberOfKeys++;\r\n    \r\n    if(CurrentNumberOfKeys == 3)\r\n    {\r\n        DoorMesh->SetVisibility(true);\r\n        // 启用碰撞，允许交互\r\n        //DoorMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);\r\n        \r\n        if(DoorCreateSound)\r\n        {\r\n            UGameplayStatics::PlaySoundAtLocation(this, DoorCreateSound, GetActorLocation());\r\n        }\r\n\r\n        APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);\r\n        if (PlayerPawn)\r\n        {\r\n            StartCameraTransition(PlayerPawn);\r\n        }\r\n        \r\n    }\r\n}\r\n\r\nvoid AFinalDoor::OnInteract_Implementation(AActor* Interactor)\r\n{\r\n    // 只有在门可见时才允许交互\r\n    if (DoorMesh->IsVisible())\r\n    {\r\n        UE_LOG(LogTemp, Warning, TEXT(\"FinalDoor interacted - Returning to main menu\"));\r\n\r\n        if(InteractSound)\r\n        {\r\n            UGameplayStatics::PlaySoundAtLocation(this, InteractSound, GetActorLocation());\r\n        }\r\n        \r\n        // 回到主菜单\r\n        ReturnToMainMenu();\r\n    }\r\n    else\r\n    {\r\n        UE_LOG(LogTemp, Warning, TEXT(\"FinalDoor is not visible - Interaction ignored\"));\r\n    }\r\n}\r\n\r\nvoid AFinalDoor::StartCameraTransition(APawn* TargetPawn)\r\n{\r\n    if(!TargetPawn || !TargetPawn->GetController())\r\n    {\r\n        return;\r\n    }\r\n\r\n    OriginalPawn = TargetPawn;\r\n    APlayerController* PC = Cast<APlayerController>(TargetPawn->GetController());\r\n    if(!PC)\r\n    {\r\n        return;\r\n    }\r\n\r\n    // 直接从玩家摄像机切换摄像机\r\n    PC->SetViewTargetWithBlend(this, CameraTransitionTime, VTBlend_Cubic, 1.0f, false);\r\n    \r\n    OriginalPawn->SetActorLocation(FVector(0, 0, 600));\r\n    \r\n    \r\n    GetWorld()->GetTimerManager().SetTimer(CameraTimerHandle, this, &AFinalDoor::ReturnToPlayerCamera, CameraHoldTime + CameraTransitionTime, false);\r\n\r\n}\r\n\r\nvoid AFinalDoor::ReturnToMainMenu()\r\n{\r\n    UGameplayStatics::OpenLevel(GetWorld(), \"EndMap\");\r\n}\r\n\r\nvoid AFinalDoor::ReturnToPlayerCamera()\r\n{\r\n    if(OriginalPawn && OriginalPawn->GetController())\r\n    {\r\n        APlayerController* PC = Cast<APlayerController>(OriginalPawn->GetController());\r\n        if(PC)\r\n        {\r\n            PC->SetViewTargetWithBlend(OriginalPawn, CameraTransitionTime, VTBlend_Cubic, 1.0f, false);\r\n        }\r\n    }\r\n    OriginalPawn = nullptr;\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Source/declassify_door/Private/Actor/FinalDoor.cpp b/Source/declassify_door/Private/Actor/FinalDoor.cpp
+--- a/Source/declassify_door/Private/Actor/FinalDoor.cpp	(revision 34afd5d83af61d7c4c6f4243e6dc6360f2748084)
++++ b/Source/declassify_door/Private/Actor/FinalDoor.cpp	(date 1765536962640)
+@@ -16,8 +16,8 @@
+ 
+     DoorMesh->SetVisibility(false);
+ 
+-    PassCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PassCamera"));
+-    PassCamera->SetupAttachment(RootComponent);
++    FinalCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FinalCamera"));
++    FinalCamera->SetupAttachment(RootComponent);
+ }
+ 
+ void AFinalDoor::BeginPlay()

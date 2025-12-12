@@ -38,8 +38,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "FinalDoor")
 	class UStaticMeshComponent* DoorMesh;
 
-	UPROPERTY(EditAnywhere,Category="Pass")
-	class UCameraComponent* PassCamera;
+	UPROPERTY(EditAnywhere,Category="FinalDoor")
+	class UCameraComponent* FinalCamera;
 
 	int32 CurrentNumberOfKeys = 0;
 
@@ -53,10 +53,10 @@ private:
 	float ColorTolerance = 0.1f;
 
 	UPROPERTY(EditAnywhere,Category = "FinalDoor",meta = (AllowPrivateAccess = "true"))
-	float CameraTransitionTime = 2.0f;
+	float CameraTransitionTime = 1.5f;
 
 	UPROPERTY(EditAnywhere, Category = "FinalDoor", meta = (AllowPrivateAccess = "true"))
-	float CameraHoldTime = 3.0f;
+	float CameraHoldTime = 2.0f;
 	
 	APawn* OriginalPawn = nullptr;
 	FTimerHandle CameraTimerHandle;

@@ -1,0 +1,34 @@
+﻿<changelist name="在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]" date="1765536409130" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/shelved.patch" />
+  <option name="DESCRIPTION" value="在进行更新之前于 2025/12/12 18:46 取消提交了更改 [更改]" />
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/HidePass/BP_HidePass_White.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/HidePass/BP_HidePass_White.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/BP_HidePass_White.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/HidePass/BP_HidePass_Blue.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/HidePass/BP_HidePass_Blue.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/BP_HidePass_Blue.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/HidePass/BP_HidePass_Green.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/HidePass/BP_HidePass_Green.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/BP_HidePass_Green.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/HidePass/BP_HidePass_Red.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/HidePass/BP_HidePass_Red.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/BP_HidePass_Red.uasset" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/Map/PlayGame.umap" />
+    <option name="AFTER_PATH" value="Content/Map/PlayGame.umap" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/PlayGame.umap" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="Content/BP/BP_FinalDoor.uasset" />
+    <option name="AFTER_PATH" value="Content/BP/BP_FinalDoor.uasset" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.declassify_door/.idea/shelf/在进行更新之前于_2025_12_12_18_46_取消提交了更改_[更改]/BP_FinalDoor.uasset" />
+  </binary>
+</changelist>

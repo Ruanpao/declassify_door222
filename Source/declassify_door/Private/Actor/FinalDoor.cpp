@@ -16,8 +16,8 @@ AFinalDoor::AFinalDoor()
 
     DoorMesh->SetVisibility(false);
 
-    PassCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PassCamera"));
-    PassCamera->SetupAttachment(RootComponent);
+    FinalCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FinalCamera"));
+    FinalCamera->SetupAttachment(RootComponent);
 }
 
 void AFinalDoor::BeginPlay()

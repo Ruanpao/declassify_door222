@@ -105,10 +105,11 @@ void Adeclassify_doorCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
 }
-
 AActor* Adeclassify_doorCharacter::SphereTraceForInteractable()
 {
-	FVector StartLocation = GetActorLocation();
+	// 修改球心位置：摄像机位置 + 摄像机方向 * InteractRadius
+	FVector StartLocation = FirstPersonCameraComponent->GetComponentLocation() + 
+		FirstPersonCameraComponent->GetForwardVector() * InteractRadius;
     
 	TArray<FHitResult> HitResults;
 	FCollisionShape Sphere = FCollisionShape::MakeSphere(InteractRadius);

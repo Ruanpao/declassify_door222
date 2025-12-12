@@ -74,7 +74,7 @@ void ARotateDoor::OnInteract_Implementation(AActor* Interactor)
 		FRotator CharacterRotation = Character->GetActorRotation();
 			
 		FVector ForwardVector = CharacterRotation.Vector();  
-		FVector TeleportLocation = CharacterLocation + (ForwardVector * 500.0f); 
+		FVector TeleportLocation = CharacterLocation + (ForwardVector * 250.0f); 
 		
 		
 		if (UCharacterMovementComponent* MovementComp = Character->GetCharacterMovement())

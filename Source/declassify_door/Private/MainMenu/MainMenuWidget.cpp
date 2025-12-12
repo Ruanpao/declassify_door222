@@ -37,17 +37,16 @@ void UMainMenuWidget::NativeConstruct()
         UE_LOG(LogTemp, Error, TEXT("QuitGameButton is null!"));
     }
 
-    // === 新增代码开始 ===
-    // 初始化动画变量
+
     bIsAnimating = false;
     AnimationTime = 0.0f;
     TotalAnimationTime = 3.0f; // 3秒动画
     CameraStartDistance = 0.0f;
     CameraTargetDistance = 2500.0f; // 摄像机前飞500单位
-    // === 新增代码结束 ===
+    
 }
 
-// === 新增代码开始 ===
+
 void UMainMenuWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
     Super::NativeTick(MyGeometry, InDeltaTime);
@@ -146,14 +145,10 @@ void UMainMenuWidget::OnStartGameClicked()
     UE_LOG(LogTemp, Warning, TEXT("Start Game button clicked"));
     SetColorAndOpacity(FLinearColor(1, 1, 1, 0));
 
-    // === 修改代码开始 ===
-    // 原来的直接加载地图改为先播放动画
-    // UGameplayStatics::OpenLevel(GetWorld(), "PlayGame"); // 注释掉原来的代码
+    SetColorAndOpacity(FLinearColor(1, 1, 1, 0));
 
     
-    
-    StartAnimation(); // 改为启动动画
-    // === 修改代码结束 ===
+    StartAnimation(); 
 }
 
 void UMainMenuWidget::OnQuitGameClicked()

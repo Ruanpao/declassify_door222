@@ -157,9 +157,7 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
     {
         UE_LOG(LogTemp, Warning, TEXT("--- REMOVAL MODE ---"));
         
-        // 检查玩家是否空手
-        if (Player->InventoryComponent->HeldItem.ID == FName("0"))
-        {
+
             UE_LOG(LogTemp, Warning, TEXT("Player hand is empty, can pick up plate"));
             UE_LOG(LogTemp, Warning, TEXT("Adding to inventory: %s"), *StoredPlateID.ToString());
             
@@ -185,12 +183,7 @@ void ASlotActor::OnInteract_Implementation(AActor* Interactor)
             CurrentPlateColor = FLinearColor::White;
             
             UE_LOG(LogTemp, Warning, TEXT("Plate removed, state reset"));
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Player hand is not empty, cannot pick up plate"));
-            UE_LOG(LogTemp, Warning, TEXT("Held item ID: %s"), *Player->InventoryComponent->HeldItem.ID.ToString());
-        }
+
     }
     
     UE_LOG(LogTemp, Warning, TEXT("=== ASlotActor::OnInteract_Implementation - END ===\n"));

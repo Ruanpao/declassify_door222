@@ -79,7 +79,6 @@ void AFinalDoor::OnInteract_Implementation(AActor* Interactor)
 
 void AFinalDoor::ReturnToMainMenu()
 {
-        // 备用方案：直接加载主菜单地图
-    UGameplayStatics::OpenLevel(GetWorld(), "MenuMap");
+    UGameplayStatics::OpenLevel(GetWorld(), "EndMap");
 }
 
